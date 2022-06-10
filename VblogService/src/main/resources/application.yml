@@ -1,2 +1,39 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://121.36.209.225:3306/vblog?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC
+    username: root
+    password: 123456
+
+
+  # 设置全局日期格式,如果设置这个格式,则代码中@DateTimeFormat(pattern = "dd/MM/yyyy") 无效!!
+  mvc:
+    format:
+      date: yyyy-MM-dd
 server:
-  port: 7758
+  servlet:
+    encoding:
+      charset: utf-8
+  port: 8989
+
+
+
+# Mybatis 配置
+mybatis:
+  type-aliases-package: com\example\vblogservice\entity\domian
+  mapper-locations: classpath:/mybatis/mapper/*.xml
+
+
+logging:
+  level:
+    com.demo.springboot.helloworld.mapper: debug
+
+#添加Thymeleaf配置
+thymeleaf:
+  cache: false
+  prefix: classpath:/templates/
+  suffix: .html
+  mode: HTML5
+  encoding: UTF-8
+  content-type: text/html
+
