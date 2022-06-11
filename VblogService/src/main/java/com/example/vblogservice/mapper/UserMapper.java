@@ -4,7 +4,9 @@ import com.example.vblogservice.entity.domian.User;
 import com.example.vblogservice.entity.domian.UserExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface UserMapper {
     long countByExample(UserExample example);
 
@@ -33,4 +35,6 @@ public interface UserMapper {
     int updateByPrimaryKeyWithBLOBs(User record);
 
     int updateByPrimaryKey(User record);
+
+    Integer selectMaxID();
 }

@@ -14,6 +14,27 @@ public class UserController {
     @Autowired
     private UserServiceImpl userService;
 
+    @RequestMapping("/register")
+    /**
+     *
+     * @param plainText 初始密码
+     * @return 加密密码
+     */
+    @ResponseBody
+    public String register( String account,
+                               String password) {
+        boolean exist=userService.judgeExist(account);
+        if(exist)
+        {
+            return "account exist";
+        }
+         else {
+            userService.register(account,password);
+            return "register success";
+        }
+    }
+
+
     @RequestMapping("/login")
     @ResponseBody
     public String login(HttpSession session, ModelMap modelMap, String account,
