@@ -23,6 +23,10 @@ mybatis:
   type-aliases-package: com\example\vblogservice\entity\domian
   mapper-locations: classpath:/mybatis/mapper/*.xml
 
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
 
 logging:
   level:
