@@ -17,7 +17,6 @@ server:
   port: 8989
 
 
-
 # Mybatis 配置
 mybatis:
   type-aliases-package: com\example\vblogservice\entity\domian
@@ -25,15 +24,10 @@ mybatis:
 
 
 logging:
-  level:
-    com.demo.springboot.helloworld.mapper: debug
+  logback:
+    rollingpolicy:
+      file-name-pattern: ${Date} + mps.log
+  file:
+    path: ./log/
 
-#添加Thymeleaf配置
-thymeleaf:
-  cache: false
-  prefix: classpath:/templates/
-  suffix: .html
-  mode: HTML5
-  encoding: UTF-8
-  content-type: text/html
 
