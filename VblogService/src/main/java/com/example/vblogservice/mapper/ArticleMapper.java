@@ -2,9 +2,12 @@ package com.example.vblogservice.mapper;
 
 import com.example.vblogservice.entity.domian.Article;
 import com.example.vblogservice.entity.domian.ArticleExample;
-import java.util.List;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
+@Mapper
 public interface ArticleMapper {
     long countByExample(ArticleExample example);
 
