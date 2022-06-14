@@ -52,6 +52,17 @@ public class ArticleController {
         return articleService.getArticleCountsByExample(example);
     }
 
+    @GetMapping("article/counts/title/fuzzy/{title}")
+    public long getArticleFuzzyCountsByTitle(@PathVariable String title) {
+        // set example, count articles by title.
+        ArticleExample example = new ArticleExample();
+        ArticleExample.Criteria criteria = example.createCriteria();
+        criteria.andTitleLike("%" + title + "%");
+        criteria.andTitleIsNotNull();
+
+        return articleService.getArticleCountsByExample(example);
+    }
+
     @GetMapping("articles/title/{title}")
     public List<Article> getArticleByTitle(@PathVariable String title) {
         // set example, search articles by title.
@@ -74,6 +85,30 @@ public class ArticleController {
 
         return articleService.getArticlesByExamplePaged(example, startPage, pageSize);
     }
+
+    @GetMapping("articles/title/fuzzy/{title}")
+    public List<Article> getArticleByTitleFuzzy(@PathVariable String title) {
+        // set example, search articles by title.
+        ArticleExample example = new ArticleExample();
+        ArticleExample.Criteria criteria = example.createCriteria();
+        criteria.andTitleLike("%" + title + "%");
+        criteria.andTitleIsNotNull();
+
+        return articleService.getArticleByExample(example);
+    }
+
+    @GetMapping("articles/title/fuzzy/paged/{title}/{startPage}/{pageSize}")
+    public PageInfo<Article> getArticlesByTitleFuzzyPaged(
+            @PathVariable String title, @PathVariable int startPage, @PathVariable int pageSize) {
+        // set example, page articles by title.
+        ArticleExample example = new ArticleExample();
+        ArticleExample.Criteria criteria = example.createCriteria();
+        criteria.andTitleLike("%" + title + "%");
+        criteria.andTitleIsNotNull();
+
+        return articleService.getArticlesByExamplePaged(example, startPage, pageSize);
+    }
+
 
     @GetMapping("article/counts/tag/{tag}")
     public long getArticleCountsByTag(@PathVariable String tag) {
