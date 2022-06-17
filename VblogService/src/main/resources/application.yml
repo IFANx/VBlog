@@ -1,7 +1,7 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://121.36.209.225:3306/vblog?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC
+    url: jdbc:mysql://121.36.209.225:3306/vblog?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
     username: root
     password: 123456
   redis:
@@ -14,7 +14,11 @@ spring:
   # 设置全局日期格式,如果设置这个格式,则代码中@DateTimeFormat(pattern = "dd/MM/yyyy") 无效!!
   mvc:
     format:
-      date: yyyy-MM-dd
+      date: yyyy-MM-dd HH:mm:ss
+
+  jackson:
+    time-zone: GMT+8
+
 server:
   servlet:
     encoding:
