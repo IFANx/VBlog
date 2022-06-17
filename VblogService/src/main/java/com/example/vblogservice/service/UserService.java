@@ -1,5 +1,7 @@
 package com.example.vblogservice.service;
 
+import com.example.vblogservice.entity.domian.User;
+
 public interface UserService {
     boolean register(String account, String password);
 
@@ -8,4 +10,6 @@ public interface UserService {
     boolean judgeExist(String account);
 
     Integer MaxID();
+
+    User getSingleUser(String account);
 }

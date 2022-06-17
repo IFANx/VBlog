@@ -62,5 +62,11 @@ public class UserServiceImpl implements UserService {
         return true;
     }
 
+    public User getSingleUser(String account) {
+        UserExample userExample=new UserExample();
+        userExample.createCriteria().andAccountEqualTo(account);
+        return userMapper.selectByExample(userExample).get(0);
+    }
+
 
 }
