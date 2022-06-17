@@ -4,8 +4,9 @@ import com.example.vblogservice.entity.domian.User;
 import com.example.vblogservice.entity.domian.UserExample;
 import com.example.vblogservice.mapper.UserMapper;
 import com.example.vblogservice.util.MD5;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.Date;
 import java.util.List;
 
@@ -13,8 +14,12 @@ import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
-    @Autowired
-    private UserMapper userMapper;
+    final private UserMapper userMapper;
+    MD5 md5 = new MD5();
+
+    public UserServiceImpl(UserMapper userMapper) {
+        this.userMapper = userMapper;
+    }
 
     @Override
     public Integer MaxID() {
@@ -23,44 +28,75 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean register(String account, String password) {
+    public int delete(User user) {
+        return userMapper.deleteByPrimaryKey(user.getId());
+    }
+
+    @Transactional
+    @Override
+    public int register(String account, String password){
+        UserExample userExample = new UserExample();
+        userExample.createCriteria().andAccountEqualTo(account);
+        List<User> users = userMapper.selectByExample(userExample);
+        if(!users.isEmpty()) return 0x7fffff;
         User user = new User();
+        user.setPassword(md5.getCiphertext(password));
         user.setAccount(account);
         user.setBirthday(new Date());
         user.setDescription("test");
         user.setEmail("test@email.com");
         user.setGender("male");
         user.setName("test");
-        MD5 md5=new MD5();
-        user.setPassword(md5.getCiphertext(password));
         user.setId(userMapper.selectMaxID()+1);
-        userMapper.insert(user);
-        return true;
+        return userMapper.insert(user);
     }
 
+
+    @Transactional
     @Override
-    public boolean login(String account, String password) {
-        MD5 md5=new MD5();
+    public User login(String account, String password) {
         UserExample userExample = new UserExample();
         userExample.createCriteria().andAccountEqualTo(account);
         List<User> users = userMapper.selectByExample(userExample);
-        if (users == null) {
-            return false;
-        } else if (md5.verify(password,users.get(0).getPassword())) {
-            return true;
-        } else {
-            return false;
+        if(!users.isEmpty()){
+            User user = users.get(0);
+            if(md5.verify(password,user.getPassword())) return user;
+            return new User();
+        }
+        else{
+            return new User();
         }
     }
 
+    @Transactional
+    @Override
+    public int update(User user){
+        return userMapper.update(user);
+    }
+
+    @Transactional
     @Override
     public boolean judgeExist(String account) {
         UserExample userExample=new UserExample();
         userExample.createCriteria().andAccountEqualTo(account);
-        if(userMapper.selectByExample(userExample)!=null)
-        return false;
-        return true;
+        List<User> users = userMapper.selectByExample(userExample);
+        if(users.isEmpty()){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
+
+    @Transactional
+    @Override
+    public User user(String account) {
+        UserExample userExample=new UserExample();
+        userExample.createCriteria().andAccountEqualTo(account);
+        List<User> users = userMapper.selectByExample(userExample);
+        return users.get(0);
+    }
+
 
     public User getSingleUser(String account) {
         UserExample userExample=new UserExample();

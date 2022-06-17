@@ -37,4 +37,6 @@ public interface UserMapper {
     int updateByPrimaryKey(User record);
 
     Integer selectMaxID();
+
+    int update(User user);
 }
