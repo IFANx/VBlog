@@ -1,12 +1,13 @@
 package com.example.vblogservice.service;
 
 import com.example.vblogservice.entity.domian.Comment;
-import com.example.vblogservice.entity.domian.CommentExample;
 import com.example.vblogservice.mapper.CommentMapper;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 
 @Service
 public class CommentServiceImpl implements CommentService{
@@ -16,12 +17,16 @@ public class CommentServiceImpl implements CommentService{
         this.commentMapper = commentMapper;
     }
 
+
     @Override
     @Transactional
-    public List<Comment> getCommentByAriticle(int ArticleId) {
-        List<Comment> comments = commentMapper.selectByArticle(ArticleId);
-//        List<Comment> comments = commentMapper.selectByExample(commentExample);
-        return comments;
+    public PageInfo<Comment> getCommentByAriticle(int AriticleId, int startPage, int pageSize) {
+        Page<Comment> page = PageHelper
+                .startPage(startPage, pageSize)
+                .doSelectPage(
+                        () -> commentMapper.selectByArticle(AriticleId)
+                );
+        return new PageInfo<>(page);
     }
 
     @Override
@@ -40,6 +45,7 @@ public class CommentServiceImpl implements CommentService{
     @Override
     @Transactional
     public int updateById(Comment comment) {
-        return commentMapper.updateByPrimaryKey(comment);
+        System.out.println(comment.getId());
+        return commentMapper.updateById(comment.getId(),comment);
     }
 }

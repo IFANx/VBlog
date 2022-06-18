@@ -254,4 +254,23 @@
     where article_id = #{articleId,jdbcType=INTEGER}
     order  by comment_time desc
   </select>
+
+  <update id="updateById" parameterType="com.example.vblogservice.entity.domian.Comment">
+    update comment
+    <set>
+      <if test="comment.articleId != null">
+        article_id = #{comment.articleId,jdbcType=INTEGER},
+      </if>
+      <if test="comment.commenterId != null">
+        commenter_id = #{comment.commenterId,jdbcType=INTEGER},
+      </if>
+      <if test="comment.commentTime != null">
+        comment_time = #{comment.commentTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="comment.content != null">
+        content = #{comment.content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where comment.id=#{id};
+  </update>
 </mapper>

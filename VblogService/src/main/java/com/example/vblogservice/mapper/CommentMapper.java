@@ -37,4 +37,6 @@ public interface CommentMapper {
     int updateByPrimaryKey(Comment record);
 
     List<Comment> selectByArticle(Integer article_id);
+
+    int updateById(int id ,Comment comment);
 }
