@@ -2,16 +2,21 @@ package com.example.vblogservice.controller;
 
 import com.example.vblogservice.entity.Result;
 import com.example.vblogservice.entity.domian.User;
+import com.example.vblogservice.service.RedisService;
 import com.example.vblogservice.service.UserServiceImpl;
 import com.example.vblogservice.util.ResultUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
 
 @RestController
 @RequestMapping("/user")
 public class UserController {
     @Autowired
     private UserServiceImpl userService;
+    @Autowired
+    RedisService redisService;
     /**
      *
      * @param account 账户名
@@ -33,11 +38,13 @@ public class UserController {
      * @param password 密码
      * @return 操作结果
      */
-    @PostMapping(value = "login", produces = "application/json;charset=UTF-8")
+    @PostMapping(value = "/login", produces = "application/json;charset=UTF-8")
     public Result login(String account, String password) {
         User user = userService.login(account, password);
         if (user.getAccount() == null) return ResultUtils.error("1000", "账号或密码错误");
-        else return ResultUtils.success(user);
+        redisService.setTokenStore(account);
+        String token = redisService.getToken(account);
+        return ResultUtils.success(token, user);
     }
 
 

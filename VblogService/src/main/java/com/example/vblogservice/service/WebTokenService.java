@@ -29,7 +29,7 @@ public class WebTokenService {
                     .setSigningKey(SECRET)
                     .parseClaimsJws(token)
                     .getBody();
-        } catch (TokenMgrException e) {
+        } catch (ExpiredJwtException e) {
             e.printStackTrace();
             return true;
         }
