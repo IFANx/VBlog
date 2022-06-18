@@ -27,7 +27,7 @@ public class UserController {
     public Result register(String account,String password){
         int res = userService.register(account, password);
         if(res == 0x7fffff)return ResultUtils.error("1200","账户已被注册");
-        else if(res != 0)return ResultUtils.error("1500","用户注册成功");
+        else if(res != 0)return ResultUtils.success();
         else return ResultUtils.error("1100","注册失败");
     }
 

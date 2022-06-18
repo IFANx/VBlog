@@ -248,4 +248,10 @@
       comment_time = #{commentTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="selectByArticle" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select *
+    from comment
+    where article_id = #{articleId,jdbcType=INTEGER}
+    order  by comment_time desc
+  </select>
 </mapper>
