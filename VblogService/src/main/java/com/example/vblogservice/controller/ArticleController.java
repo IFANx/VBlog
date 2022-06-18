@@ -1,8 +1,11 @@
 package com.example.vblogservice.controller;
 
+import com.example.vblogservice.constants.StatusCode;
+import com.example.vblogservice.entity.Result;
 import com.example.vblogservice.entity.domian.Article;
 import com.example.vblogservice.entity.domian.ArticleExample;
 import com.example.vblogservice.service.ArticleService;
+import com.example.vblogservice.util.ResultUtils;
 import com.github.pagehelper.PageInfo;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,63 +23,85 @@ public class ArticleController {
     }
 
     @GetMapping("article/{id}")
-    public Article getArticleById(@PathVariable int id) {
-        return articleService.getArticleById(id);
+    public Result getArticleById(@PathVariable int id) {
+        Article result = articleService.getArticleById(id);
+
+        if (result == null)
+            return ResultUtils.error("4001", StatusCode.STATUS_CODE_4001 + String.format(" Get article by ID=%d: Article not exist.", id));
+        else return ResultUtils.success(result);
     }
 
     @GetMapping("article/counts")
-    public long getArticleCounts() {
+    public Result getArticleCounts() {
         ArticleExample example = new ArticleExample(); // no criteria, count all articles.
-        return articleService.getArticleCountsByExample(example);
+
+        Long resultData = articleService.getArticleCountsByExample(example);
+        return ResultUtils.success(resultData);
     }
 
     @GetMapping("articles")
-    public List<Article> getAllArticles() {
+    public Result getAllArticles() {
         ArticleExample example = new ArticleExample();// non criteria, get all articles.
-        return articleService.getArticleByExample(example);
+        List<Article> resultData = articleService.getArticleByExample(example);
+
+        if (resultData.size() == 0)
+            return ResultUtils.error("4001", StatusCode.STATUS_CODE_4001 + " Get all articles: No article record yet.");
+        else return ResultUtils.success(resultData);
     }
 
     @GetMapping("articles/paged/{startPage}/{pageSize}")
-    public PageInfo<Article> getArticlesPaged(@PathVariable int startPage, @PathVariable int pageSize) {
+    public Result getArticlesPaged(@PathVariable int startPage, @PathVariable int pageSize) {
         ArticleExample example = new ArticleExample();// non criteria, get all articles.
-        return articleService.getArticlesByExamplePaged(example, startPage, pageSize);
+        PageInfo<Article> resultData = articleService.getArticlesByExamplePaged(example, startPage, pageSize);
+
+        if (resultData.getTotal() == 0)
+            return ResultUtils.error("4001", StatusCode.STATUS_CODE_4001 + " Get all articles paged: No article record yet.");
+        else return ResultUtils.success(resultData);
     }
 
     @GetMapping("article/counts/title/{title}")
-    public long getArticleCountsByTitle(@PathVariable String title) {
+    public Result getArticleCountsByTitle(@PathVariable String title) {
         // set example, count articles by title.
         ArticleExample example = new ArticleExample();
         ArticleExample.Criteria criteria = example.createCriteria();
         criteria.andTitleEqualTo(title);
         criteria.andTitleIsNotNull();
 
-        return articleService.getArticleCountsByExample(example);
+        Long resultData = articleService.getArticleCountsByExample(example);
+
+        return ResultUtils.success(resultData);
     }
 
     @GetMapping("article/counts/title/fuzzy/{title}")
-    public long getArticleFuzzyCountsByTitle(@PathVariable String title) {
+    public Result getArticleFuzzyCountsByTitle(@PathVariable String title) {
         // set example, count articles by title.
         ArticleExample example = new ArticleExample();
         ArticleExample.Criteria criteria = example.createCriteria();
         criteria.andTitleLike("%" + title + "%");
         criteria.andTitleIsNotNull();
 
-        return articleService.getArticleCountsByExample(example);
+        Long resultData = articleService.getArticleCountsByExample(example);
+
+        return ResultUtils.success(resultData);
     }
 
     @GetMapping("articles/title/{title}")
-    public List<Article> getArticlesByTitle(@PathVariable String title) {
+    public Result getArticlesByTitle(@PathVariable String title) {
         // set example, search articles by title.
         ArticleExample example = new ArticleExample();
         ArticleExample.Criteria criteria = example.createCriteria();
         criteria.andTitleEqualTo(title);
         criteria.andTitleIsNotNull();
 
-        return articleService.getArticleByExample(example);
+        List<Article> resultData = articleService.getArticleByExample(example);
+
+        if (resultData.size() == 0)
+            return ResultUtils.error("4001", StatusCode.STATUS_CODE_4001 + String.format(" Get articles by title=%s: No article found.", title));
+        else return ResultUtils.success(resultData);
     }
 
     @GetMapping("articles/title/paged/{title}/{startPage}/{pageSize}")
-    public PageInfo<Article> getArticlesByTitlePaged(
+    public Result getArticlesByTitlePaged(
             @PathVariable String title, @PathVariable int startPage, @PathVariable int pageSize) {
         // set example, page articles by title.
         ArticleExample example = new ArticleExample();
@@ -84,22 +109,30 @@ public class ArticleController {
         criteria.andTitleEqualTo(title);
         criteria.andTitleIsNotNull();
 
-        return articleService.getArticlesByExamplePaged(example, startPage, pageSize);
+        PageInfo<Article> resultData = articleService.getArticlesByExamplePaged(example, startPage, pageSize);
+
+        if (resultData.getTotal() == 0)
+            return ResultUtils.error("4001", StatusCode.STATUS_CODE_4001 + String.format(" Get articles by title=%s paged: No article found.", title));
+        else return ResultUtils.success(resultData);
     }
 
     @GetMapping("articles/title/fuzzy/{title}")
-    public List<Article> getArticleByTitleFuzzy(@PathVariable String title) {
+    public Result getArticleByTitleFuzzy(@PathVariable String title) {
         // set example, search articles by title.
         ArticleExample example = new ArticleExample();
         ArticleExample.Criteria criteria = example.createCriteria();
         criteria.andTitleLike("%" + title + "%");
         criteria.andTitleIsNotNull();
 
-        return articleService.getArticleByExample(example);
+        List<Article> resultData = articleService.getArticleByExample(example);
+
+        if (resultData.size() == 0)
+            return ResultUtils.error("4001", StatusCode.STATUS_CODE_4001 + String.format(" Fuzzy Query articles by title=%s: No article found.", title));
+        else return ResultUtils.success(resultData);
     }
 
     @GetMapping("articles/title/fuzzy/paged/{title}/{startPage}/{pageSize}")
-    public PageInfo<Article> getArticlesByTitleFuzzyPaged(
+    public Result getArticlesByTitleFuzzyPaged(
             @PathVariable String title, @PathVariable int startPage, @PathVariable int pageSize) {
         // set example, page articles by title.
         ArticleExample example = new ArticleExample();
@@ -107,34 +140,43 @@ public class ArticleController {
         criteria.andTitleLike("%" + title + "%");
         criteria.andTitleIsNotNull();
 
-        return articleService.getArticlesByExamplePaged(example, startPage, pageSize);
+        PageInfo<Article> resultData = articleService.getArticlesByExamplePaged(example, startPage, pageSize);
+
+        if (resultData.getTotal() == 0)
+            return ResultUtils.error("4001", StatusCode.STATUS_CODE_4001 + String.format(" Fuzzy Query articles by title=%s paged: No article found.", title));
+        else return ResultUtils.success(resultData);
     }
 
 
     @GetMapping("article/counts/tag/{tag}")
-    public long getArticleCountsByTag(@PathVariable String tag) {
+    public Result getArticleCountsByTag(@PathVariable String tag) {
         // set example, count articles by tag.
         ArticleExample example = new ArticleExample();
         ArticleExample.Criteria criteria = example.createCriteria();
         criteria.andTagEqualTo(tag);
         criteria.andTagIsNotNull();
 
-        return articleService.getArticleCountsByExample(example);
+        Long resultData = articleService.getArticleCountsByExample(example);
+        return ResultUtils.success(resultData);
     }
 
     @GetMapping("articles/tag/{tag}")
-    public List<Article> getArticleByTag(@PathVariable String tag) {
+    public Result getArticleByTag(@PathVariable String tag) {
         // set example, search articles by tag.
         ArticleExample example = new ArticleExample();
         ArticleExample.Criteria criteria = example.createCriteria();
         criteria.andTagEqualTo(tag);
         criteria.andTagIsNotNull();
 
-        return articleService.getArticleByExample(example);
+        List<Article> resultData = articleService.getArticleByExample(example);
+
+        if (resultData.size() == 0)
+            return ResultUtils.error("4001", StatusCode.STATUS_CODE_4001 + String.format(" Get articles by tag=%s: No article found.", tag));
+        else return ResultUtils.success(resultData);
     }
 
     @GetMapping("articles/tag/paged/{tag}/{startPage}/{pageSize}")
-    public PageInfo<Article> getArticlesByTagPaged(
+    public Result getArticlesByTagPaged(
             @PathVariable String tag, @PathVariable int startPage, @PathVariable int pageSize) {
         // set example, page articles by tag.
         ArticleExample example = new ArticleExample();
@@ -142,44 +184,54 @@ public class ArticleController {
         criteria.andTagEqualTo(tag);
         criteria.andTagIsNotNull();
 
-        return articleService.getArticlesByExamplePaged(example, startPage, pageSize);
+        PageInfo<Article> resultData = articleService.getArticlesByExamplePaged(example, startPage, pageSize);
+
+        if (resultData.getTotal() == 0)
+            return ResultUtils.error("4001", StatusCode.STATUS_CODE_4001 + String.format(" Get articles by tag=%s paged: No article found.", tag));
+        else return ResultUtils.success(resultData);
     }
 
     @GetMapping("article/counts/publish_time/{publishTime}")
-    public long getArticleCountsByPublishTime(@PathVariable Date publishTime) {
+    public Result getArticleCountsByPublishTime(@PathVariable Date publishTime) {
         // set example, search articles by publish time.
         ArticleExample example = new ArticleExample();
         ArticleExample.Criteria criteria = example.createCriteria();
         criteria.andPublishTimeEqualTo(publishTime);
         criteria.andPublishTimeIsNotNull();
 
-        return articleService.getArticleCountsByExample(example);
+        Long resultData = articleService.getArticleCountsByExample(example);
+        return ResultUtils.success(resultData);
     }
 
     @GetMapping("article/counts/publish_time/{startTime}/{endTime}")
-    public long getArticleCountsByPublishTimeRange(@PathVariable Date startTime, @PathVariable Date endTime) {
+    public Result getArticleCountsByPublishTimeRange(@PathVariable Date startTime, @PathVariable Date endTime) {
         // set example, search articles by publish time range.
         ArticleExample example = new ArticleExample();
         ArticleExample.Criteria criteria = example.createCriteria();
         criteria.andPublishTimeBetween(startTime, endTime);
         criteria.andPublishTimeIsNotNull();
 
-        return articleService.getArticleCountsByExample(example);
+        Long resultData = articleService.getArticleCountsByExample(example);
+        return ResultUtils.success(resultData);
     }
 
     @GetMapping("articles/publish_time/{publishTime}")
-    public List<Article> getArticlesByPublishTime(@PathVariable Date publishTime) {
+    public Result getArticlesByPublishTime(@PathVariable Date publishTime) {
         // set example, search articles by title.
         ArticleExample example = new ArticleExample();
         ArticleExample.Criteria criteria = example.createCriteria();
         criteria.andPublishTimeEqualTo(publishTime);
         criteria.andPublishTimeIsNotNull();
 
-        return articleService.getArticleByExample(example);
+        List<Article> resultData = articleService.getArticleByExample(example);
+
+        if (resultData.size() == 0)
+            return ResultUtils.error("4001", StatusCode.STATUS_CODE_4001 + String.format(" Get articles by publishTime=%tc: No article found.", publishTime));
+        else return ResultUtils.success(resultData);
     }
 
     @GetMapping("articles/publish_time/paged/{publishTime}/{startPage}/{pageSize}")
-    public PageInfo<Article> getArticlesByPublishTimePaged(
+    public Result getArticlesByPublishTimePaged(
             @PathVariable Date publishTime, @PathVariable int startPage, @PathVariable int pageSize) {
         // set example, page articles by publish time.
         ArticleExample example = new ArticleExample();
@@ -187,22 +239,30 @@ public class ArticleController {
         criteria.andPublishTimeEqualTo(publishTime);
         criteria.andPublishTimeIsNotNull();
 
-        return articleService.getArticlesByExamplePaged(example, startPage, pageSize);
+        PageInfo<Article> resultData = articleService.getArticlesByExamplePaged(example, startPage, pageSize);
+
+        if (resultData.getTotal() == 0)
+            return ResultUtils.error("4001", StatusCode.STATUS_CODE_4001 + String.format(" Get articles by publishTime=%tc paged: No article found.", publishTime));
+        else return ResultUtils.success(resultData);
     }
 
     @GetMapping("articles/publish_time/{startTime}/{endTime}")
-    public List<Article> getArticlesByPublishTimeRange(@PathVariable Date startTime, @PathVariable Date endTime) {
+    public Result getArticlesByPublishTimeRange(@PathVariable Date startTime, @PathVariable Date endTime) {
         // set example, search articles by title.
         ArticleExample example = new ArticleExample();
         ArticleExample.Criteria criteria = example.createCriteria();
         criteria.andPublishTimeBetween(startTime, endTime);
         criteria.andPublishTimeIsNotNull();
 
-        return articleService.getArticleByExample(example);
+        List<Article> resultData = articleService.getArticleByExample(example);
+
+        if (resultData.size() == 0)
+            return ResultUtils.error("4001", StatusCode.STATUS_CODE_4001 + String.format(" Get articles by publishTime range[%tc, %tc]: No article found.", startTime, endTime));
+        else return ResultUtils.success(resultData);
     }
 
     @GetMapping("articles/publish_time/paged/{startTime}/{endTime}/{startPage}/{pageSize}")
-    public PageInfo<Article> getArticlesByPublishTimeRangePaged(
+    public Result getArticlesByPublishTimeRangePaged(
             @PathVariable Date startTime, @PathVariable Date endTime,
             @PathVariable int startPage, @PathVariable int pageSize) {
         // set example, search articles by title.
@@ -211,22 +271,38 @@ public class ArticleController {
         criteria.andPublishTimeBetween(startTime, endTime);
         criteria.andPublishTimeIsNotNull();
 
-        return articleService.getArticlesByExamplePaged(example, startPage, pageSize);
+        PageInfo<Article> resultData = articleService.getArticlesByExamplePaged(example, startPage, pageSize);
+
+        if (resultData.getTotal() == 0)
+            return ResultUtils.error("4001", StatusCode.STATUS_CODE_4001 + String.format(" Get articles by publishTime range[%tc, %tc] paged: No article found.", startTime, endTime));
+        else return ResultUtils.success(resultData);
     }
 
     @PostMapping("article")
-    public int insertArticle(@RequestBody Article article) {
-        articleService.insertArticle(article);
-        return article.getId(); // return id of the record created(JSON).
+    public Result insertArticle(@RequestBody Article article) {
+        int affectedRows = articleService.insertArticle(article);
+
+        if (affectedRows == 0) return ResultUtils.error("4002", StatusCode.STATUS_CODE_4002 + " Insert article failed.");
+        else {
+            int resultData = article.getId();
+            return ResultUtils.success(resultData);// return id of the record created.
+        }
     }
 
     @DeleteMapping("article/{id}")
-    public void deleteArticle(@PathVariable int id) {
-        articleService.deleteArticleById(id);
+    public Result deleteArticle(@PathVariable int id) {
+        int affectedRows = articleService.deleteArticleById(id);
+
+        if (affectedRows == 0)
+            return ResultUtils.error("4003", StatusCode.STATUS_CODE_4003 + String.format(" Delete article by id=%d: Delete failed.", id));
+        else return ResultUtils.success("");
     }
 
     @PutMapping("article")
-    public void updateArticle(@RequestBody Article article) {
-        articleService.updateById(article);
+    public Result updateArticle(@RequestBody Article article) {
+        int affectedRows = articleService.updateById(article);
+
+        if (affectedRows == 0) return ResultUtils.error("4004", StatusCode.STATUS_CODE_4004 + " Update article failed.");
+        else return ResultUtils.success("");
     }
 }
