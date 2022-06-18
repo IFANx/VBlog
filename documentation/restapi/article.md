@@ -16,7 +16,7 @@
 
 * 请求：GET:/article/1
 
-* Response Body:
+* Response Body Data:
 
   ```json
   {
@@ -49,7 +49,7 @@
 
 * 请求：GET:/article/counts
 
-* Response Body:
+* Response Body Data:
 
   ```json
   11
@@ -67,7 +67,7 @@
 
 * 请求：GET:/articles
 
-* Response Body:
+* Response Body Data:
 
   ```json
   [
@@ -218,7 +218,7 @@
 
 * 请求：GET:/articles/paged/1/3
 
-* Response Body:
+* Response Body Data:
 
   ```json
   {
@@ -301,7 +301,7 @@
 
 * 请求：GET:/article/counts/title/test article
 
-* Response Body:
+* Response Body Data:
 
   ```json
   3
@@ -319,7 +319,7 @@
 
 * 请求：GET:/articles/title/test article
 
-* Response Body:
+* Response Body Data:
 
   ```json
   [
@@ -374,7 +374,7 @@
 
 * 请求：GET:/articles/title/paged/test article2/1/3
 
-* Response Body:
+* Response Body Data:
 
   ```json
   {
@@ -453,7 +453,7 @@
 
 * 请求：GET:/article/counts/title/fuzzy/test
 
-* Response Body:
+* Response Body Data:
 
   ```json
   11
@@ -471,7 +471,7 @@
 
 * 请求：GET:/articles/title/fuzzy/le2
 
-* Response Body:
+* Response Body Data:
 
   ```json
   [
@@ -574,7 +574,7 @@
 
 * 请求：GET:/articles/title/fuzzy/paged/test/1/3
 
-* Response Body:
+* Response Body Data:
 
   ```json
   {
@@ -657,7 +657,7 @@
 
 * 请求：GET:/article/counts/tag/test
 
-* Response Body:
+* Response Body Data:
 
   ```json
   10
@@ -675,7 +675,7 @@
 
 * 请求：GET:/articles/tag/test
 
-* Response Body:
+* Response Body Data:
 
   ```json
   [
@@ -814,7 +814,7 @@
 
 * 请求：GET:/articles/tag/paged/test/1/3
 
-* Response Body:
+* Response Body Data:
 
   ```json
   {
@@ -895,7 +895,7 @@
 
 * 请求：GET:/article/counts/publish_time/2022-06-10 15:27:51
 
-* Response Body:
+* Response Body Data:
 
   ```json
   1
@@ -913,7 +913,7 @@
 
 * 请求：GET:/articles/publish_time/2022-06-10 15:27:51
 
-* Response Body:
+* Response Body Data:
 
   ```json
   [
@@ -944,7 +944,7 @@
 
 * 请求：GET:/articles/publish_time/paged/2022-06-12 15:26:40/1/2
 
-* Response Body:
+* Response Body Data:
 
   ```json
   {
@@ -1013,7 +1013,7 @@
 
 * 请求：GET:/article/counts/publish_time/2022-06-10 15:26:40/2022-06-12 15:26:40
 
-* Response Body:
+* Response Body Data:
 
   ```json
   10
@@ -1031,7 +1031,7 @@
 
 * 请求：GET:/articles/publish_time/2022-06-10 15:26:40/2022-06-12 15:26:40
 
-* Response Body:
+* Response Body Data:
 
   ```json
   [
@@ -1170,7 +1170,7 @@
 
 * 请求：GET:/articles/publish_time/paged/2022-06-10 15:26:40/2022-06-12 15:26:40/1/3
 
-* Response Body:
+* Response Body Data:
 
   ```json
   {
@@ -1237,6 +1237,181 @@
   }
   ```
 
+## 按发布者获取article资源接口
+
+### GET:/article/counts/user_id/{user_id}
+
+获取指定发布者id下的article记录数量
+
+| 传参方式 | 参数      | 返回                             |
+|------|---------|--------------------------------|
+| url  | user_id | 所有发布于{user_id}对应用户名下的article数量 |
+
+**Example:**
+
+* 请求：GET:/article/counts/user_id/1
+
+* Response Body Data:
+
+  ```json
+  4
+  ```
+
+### GET:/articles/user_id/{user_id}
+
+获取指定发布者id下的所有article
+
+| 传参方式 | 参数      | 返回                           |
+|------|---------|------------------------------|
+| url  | user_id | 所有发布于{user_id}对应用户名下的article |
+
+**Example:**
+
+* 请求：GET:/articles/user_id/1
+
+* Response Body Data:
+
+  ```json
+  [
+      {
+        "id": 1,
+        "userId": 1,
+        "commentCount": 0,
+        "likeCount": 0,
+        "readCount": 0,
+        "title": "test article",
+        "tag": "test",
+        "publishTime": "2022-06-10T15:26:40.000+08:00",
+        "subscribeCount": 0,
+        "content": "has no content, its just test data"
+      },
+      {
+        "id": 3,
+        "userId": 1,
+        "commentCount": 0,
+        "likeCount": 0,
+        "readCount": 0,
+        "title": "test article",
+        "tag": "test",
+        "publishTime": "2022-06-10T15:27:51.000+08:00",
+        "subscribeCount": 0,
+        "content": "has no content, just another test data"
+      },
+      {
+        "id": 14,
+        "userId": 1,
+        "commentCount": null,
+        "likeCount": null,
+        "readCount": null,
+        "title": "yet another test title, but updated...",
+        "tag": null,
+        "publishTime": null,
+        "subscribeCount": null,
+        "content": "pretend there is the content..."
+      },
+      {
+        "id": 16,
+        "userId": 1,
+        "commentCount": 0,
+        "likeCount": 0,
+        "readCount": 0,
+        "title": "test",
+        "tag": "test",
+        "publishTime": null,
+        "subscribeCount": 0,
+        "content": "unit test add"
+      }
+    ]
+  ```
+
+### GET:/articles/user_id/paged/{user_id}/{startPage}/{pageSize}
+
+获取指定发布者id下的所有article，并进行分页
+
+| 传参方式 | 参数      | 返回                                                                                   |
+|------|---------|--------------------------------------------------------------------------------------|
+| url  | user_id | 按每页{pageSize}条记录划分所有发布于{user_id}对应的用户名下的所有article记录，其中第{startPage}页的记录以及相关信息的JSON字符串 |
+
+**Example:**
+
+* 请求：GET:/articles/user_id/paged/1/1/5
+
+* Response Body Data:
+
+  ```json
+  {
+      "total": 4,
+      "list": [
+        {
+          "id": 1,
+          "userId": 1,
+          "commentCount": 0,
+          "likeCount": 0,
+          "readCount": 0,
+          "title": "test article",
+          "tag": "test",
+          "publishTime": "2022-06-10T15:26:40.000+08:00",
+          "subscribeCount": 0,
+          "content": "has no content, its just test data"
+        },
+        {
+          "id": 3,
+          "userId": 1,
+          "commentCount": 0,
+          "likeCount": 0,
+          "readCount": 0,
+          "title": "test article",
+          "tag": "test",
+          "publishTime": "2022-06-10T15:27:51.000+08:00",
+          "subscribeCount": 0,
+          "content": "has no content, just another test data"
+        },
+        {
+          "id": 14,
+          "userId": 1,
+          "commentCount": null,
+          "likeCount": null,
+          "readCount": null,
+          "title": "yet another test title, but updated...",
+          "tag": null,
+          "publishTime": null,
+          "subscribeCount": null,
+          "content": "pretend there is the content..."
+        },
+        {
+          "id": 16,
+          "userId": 1,
+          "commentCount": 0,
+          "likeCount": 0,
+          "readCount": 0,
+          "title": "test",
+          "tag": "test",
+          "publishTime": null,
+          "subscribeCount": 0,
+          "content": "unit test add"
+        }
+      ],
+      "pageNum": 1,
+      "pageSize": 5,
+      "size": 4,
+      "startRow": 1,
+      "endRow": 4,
+      "pages": 1,
+      "prePage": 0,
+      "nextPage": 0,
+      "isFirstPage": true,
+      "isLastPage": true,
+      "hasPreviousPage": false,
+      "hasNextPage": false,
+      "navigatePages": 8,
+      "navigatepageNums": [
+        1
+      ],
+      "navigateFirstPage": 1,
+      "navigateLastPage": 1
+    }
+  ```
+
 ## 新建article接口
 
 以下是创建article资源的相关接口
@@ -1270,7 +1445,7 @@ Selective Insert)
   }
   ```
 
-* Response Body:
+* Response Body Data:
 
   ```json
   14
