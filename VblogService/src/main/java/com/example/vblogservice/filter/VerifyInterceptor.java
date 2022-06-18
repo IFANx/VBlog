@@ -31,15 +31,20 @@ public class VerifyInterceptor implements HandlerInterceptor{
 
         String token = request.getHeader("BEARER");
 
-        if(token == null) {
+        if(token == null || token.equals("")) {
 
             response.getWriter().write(ResultUtils.error("4001","未登录").toString());
             return false;
         }
 
+        String account = request.getHeader("account");
+        if (!token.equals(redisService.getToken(account))) {
+            response.getWriter().write(ResultUtils.error("4003","token与用户不一致").toString());
+            return false;
+        }
+
         Claims claims = webTokenService.parseJwt(token);
 
-        String account = claims.getSubject();
 
         if(redisService.getToken(account) != null) {
             if(webTokenService.isExpiration(token)) {
