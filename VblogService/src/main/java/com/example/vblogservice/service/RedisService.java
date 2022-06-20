@@ -40,9 +40,9 @@ public class RedisService {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            return "";
+            return null;
         }
 
-        return "";
+        return null;
     }
 }
