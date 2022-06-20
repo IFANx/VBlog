@@ -40,6 +40,9 @@ public class UserController {
      */
     @PostMapping(value = "/login", produces = "application/json;charset=UTF-8")
     public Result login(String account, String password) {
+        if(redisService.getToken(account) != null) {
+            return ResultUtils.error("1001", "账号已登录");
+        }
         User user = userService.login(account, password);
         if (user.getAccount() == null) return ResultUtils.error("1000", "账号或密码错误");
         redisService.setTokenStore(account);
