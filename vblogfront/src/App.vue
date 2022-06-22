@@ -1,39 +1,23 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
-
-  <div class="container">
-    <form class="form-login">
-      <h1 class="h3 mb-3 font-weight-normal">Bootstrap Component Import Test</h1>
-      <label for="inputEmail" class="sr-only">Email Address</label>
-      <input type="email" id="inputEmail" class="form-control mb-2" placeholder="Email Address" required autofocus>
-      <label for="inputPassword" class="sr-only">Password</label>
-      <input type="password" class="form-control mb-2" id="inputPassword" placeholder="Password" required>
-      <div class="checkbox mb-3">
-        <label>
-          <input type="checkbox" value="remember-me"/>Remember me
-        </label>
-      </div>
-      <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
-    </form>
+  <div id="app">
+    <!--<img src="./assets/logo.png">-->
+    <router-view/>
   </div>
-
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
+  name: 'App'
 }
 </script>
 
 <style>
+  body{
+    margin:0;
+    padding:0 !important; /* 解决弹窗对页面整体的影响 */
+  }
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family:  Helvetica Neue,Helvetica,Arial,Hiragino Sans GB,Hiragino Sans GB W3,WenQuanYi Micro Hei,sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
