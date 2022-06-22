@@ -9,7 +9,6 @@ spring:
     host: 121.36.209.225
 #    host: localhost
     database: 0
-    password: softwareCHX
     timeout: 5000
     password: softwareCHX
 
