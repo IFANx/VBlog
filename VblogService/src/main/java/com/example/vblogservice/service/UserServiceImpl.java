@@ -47,7 +47,6 @@ public class UserServiceImpl implements UserService {
         user.setEmail("test@email.com");
         user.setGender("male");
         user.setName("test");
-        user.setId(userMapper.selectMaxID()+1);
         return userMapper.insert(user);
     }
 

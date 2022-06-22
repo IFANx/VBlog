@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/user")
@@ -17,14 +18,15 @@ public class UserController {
     private UserServiceImpl userService;
     @Autowired
     RedisService redisService;
+
     /**
-     *
-     * @param account 账户名
-     * @param password 密码
+     * @param param 账户密码k-v
      * @return 操作结果
      */
     @PostMapping(value = "/register", produces = "application/json;charset=UTF-8")
-    public Result register(String account,String password){
+    public Result register(@RequestBody Map<String, Object> param){
+        String account = (String) param.get("account");
+        String password = (String) param.get("password");
         int res = userService.register(account, password);
         if(res == 0x7fffff)return ResultUtils.error("1200","账户已被注册");
         else if(res != 0)return ResultUtils.success();
@@ -34,12 +36,14 @@ public class UserController {
 
 
     /**
-     * @param account  账户名
-     * @param password 密码
+     * @param param 账户密码k-v
      * @return 操作结果
      */
     @PostMapping(value = "/login", produces = "application/json;charset=UTF-8")
-    public Result login(String account, String password) {
+    public Result login(@RequestBody Map<String, Object> param) {
+        String account = (String) param.get("account");
+        String password = (String) param.get("password");
+
         if(redisService.getToken(account) != null) {
             return ResultUtils.error("1001", "账号已登录");
         }
