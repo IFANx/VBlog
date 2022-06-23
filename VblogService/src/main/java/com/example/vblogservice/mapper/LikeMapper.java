@@ -2,9 +2,12 @@ package com.example.vblogservice.mapper;
 
 import com.example.vblogservice.entity.domian.LikeExample;
 import com.example.vblogservice.entity.domian.LikeKey;
-import java.util.List;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
+@Mapper
 public interface LikeMapper {
     long countByExample(LikeExample example);
 
