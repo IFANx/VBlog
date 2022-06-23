@@ -19,7 +19,7 @@ instance.interceptors.response.use(
     (response) => {
         let tokenTmp = response.headers['BEARER']
         if (tokenTmp !== this.$store.state.token) {
-            this.commit('setToken', tokenTmp)
+            this.$store.commit('setToken', tokenTmp)
         }
 
         return response
