@@ -18,7 +18,7 @@
           <input type="checkbox" value="remember-me"> Remember me
         </label>
       </div>
-      <button class="w-100 btn btn-lg btn-primary" type="submit" @click="signin">Sign in</button>
+      <button class="w-100 btn btn-lg btn-primary" type="submit" @click="signup">Sign Up</button>
       <p class="mt-5 mb-3 text-muted">&copy; 2017–2021</p>
     </form>
   </main>
@@ -33,10 +33,19 @@ export default {
       password: ''
     }
   },
-  methods: {
-    signin() {
-      this.$api.user.register(this.account, this.password).then(res => {
-        console.log(res.data())
+  methods:{
+    signup(){
+      this.$api.user.register(this.account, this.password).then(
+              (res) => {
+                if(res.data.code === '0000') {
+                  alert(res.data.message)
+                  this.$router.push('login')
+                } else {
+                  console.log(res.data.message)
+                }
+              }
+      ).catch((error) => {
+        Promise.reject(error)
       })
     }
   }

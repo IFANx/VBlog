@@ -4,7 +4,8 @@ export default createStore({
   state: {
     onlineState: false,
     account: null,
-    token: null
+    token: null,
+    userid: null
   },
   getters: {
     getOnlineState(state,) {
@@ -15,6 +16,9 @@ export default createStore({
     },
     getToken(state) {
       return state.token
+    },
+    getUserId(state) {
+      return state.userid
     }
   },
   mutations: {
@@ -26,6 +30,9 @@ export default createStore({
     },
     setToken(token, result) {
       this.state.token = result
+    },
+    setUserId(id, result) {
+      this.state.userid = result
     }
   },
   actions: {
