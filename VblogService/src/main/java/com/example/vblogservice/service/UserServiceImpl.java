@@ -29,8 +29,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int delete(User user) {
-        return userMapper.deleteByPrimaryKey(user.getId());
+    public int delete(UserWithBLOBs userWithBLOBs) {
+        return userMapper.deleteByPrimaryKey(userWithBLOBs.getId());
     }
 
     @Transactional
@@ -48,6 +48,7 @@ public class UserServiceImpl implements UserService {
         user.setEmail("test@email.com");
         user.setGender("male");
         user.setName("test");
+        user.setPortrait(null);
         return userMapper.insert(user);
     }
 
@@ -68,11 +69,13 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-//    @Transactional
-//    @Override
-//    public int update(User user){
-//        return userMapper.update(user);
-//    }
+    @Transactional
+    @Override
+    public int update(UserWithBLOBs userWithBLOBs){
+        if(userWithBLOBs.getPassword()!=null)
+            userWithBLOBs.setPassword(md5.getCiphertext(userWithBLOBs.getPassword()));
+        return userMapper.updateByPrimaryKeySelective(userWithBLOBs);
+    }
 
     @Transactional
     @Override

@@ -1,6 +1,7 @@
 package com.example.vblogservice.service;
 
 import com.example.vblogservice.entity.domian.User;
+import com.example.vblogservice.entity.domian.UserWithBLOBs;
 
 public interface UserService {
     int register(String account, String password);
@@ -13,9 +14,9 @@ public interface UserService {
 
     Integer MaxID();
 
-    int delete(User user);
+    int delete(UserWithBLOBs userWithBLOBs);
 
-//    int update(User user);
+    int update(UserWithBLOBs userWithBLOBs);
 
     User getSingleUser(String account);
 }
