@@ -21,8 +21,6 @@ public class Article {
 
     private Integer subscribeCount;
 
-    private String content;
-
     public Integer getId() {
         return id;
     }
@@ -93,29 +91,5 @@ public class Article {
 
     public void setSubscribeCount(Integer subscribeCount) {
         this.subscribeCount = subscribeCount;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content == null ? null : content.trim();
-    }
-
-    @Override
-    public String toString() {
-        return "Article{" +
-                "id=" + id +
-                ", userId=" + userId +
-                ", commentCount=" + commentCount +
-                ", likeCount=" + likeCount +
-                ", readCount=" + readCount +
-                ", title='" + title + '\'' +
-                ", tag='" + tag + '\'' +
-                ", publishTime=" + publishTime +
-                ", subscribeCount=" + subscribeCount +
-                ", content='" + content + '\'' +
-                '}';
     }
 }
