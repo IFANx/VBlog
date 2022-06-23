@@ -8,11 +8,13 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import qs from 'qs'
 import api from "@/service/api";
+import websocket from '@/service/websocket'
 
 axios.defaults.withCredentials = true
 
 const app = createApp(App)
 app.config.globalProperties.$api = api
+app.config.globalProperties.$websocket = websocket
 app.use(store).use(router).use(VueAxios,axios).use(qs)
 app.mount('#app')
 

@@ -16,7 +16,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Component
 @ServerEndpoint("/ws/notification/{account}")
 public class NotificationWebsocketServer {
-    private static Map<String, NotificationWebsocketServer> online = new ConcurrentHashMap<String, NotificationWebsocketServer>();
+    private static final Map<String, NotificationWebsocketServer> online = new ConcurrentHashMap<String, NotificationWebsocketServer>();
     private static int onlineCount = 0;
     private Session session;
     private String account;
@@ -38,7 +38,12 @@ public class NotificationWebsocketServer {
     }
 
     @OnMessage
-    public void OnMessage(String message) throws IOException {
+    public void OnMessage(String message, Session session) throws IOException {
+        if(message.equals("heartBath")) {
+            System.out.println(message);
+            session.getAsyncRemote().sendText(message);
+            return;
+        }
         JSONObject jsonTo = JSONObject.parseObject(message);
         String mes = (String) jsonTo.get("message");
 

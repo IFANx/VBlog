@@ -35,23 +35,24 @@
     },
     methods:{
       login(){
-    this.$api.user.login(this.account, this.password).then(
-      (res) => {
-        if(res.data.code === '0000') {
-          this.$store.commit('setToken', res.data.message)
-          this.$store.commit('setAccount', res.data.data.account)
-          this.$store.commit('setUserId', res.data.data.id)
-          this.$store.commit('setOnlineState', true)
-          alert("登录成功"+this.$store.getters.getToken+this.$store.getters.getUserId)
-          this.$router.push('/')
-        } else {
-          console.log(res.data.message)
-        }
+        this.$api.user.login(this.account, this.password).then(
+            (res) => {
+              if(res.data.code === '0000') {
+                this.$store.commit('setToken', res.data.message)
+                this.$store.commit('setAccount', res.data.data.account)
+                this.$store.commit('setOnlineState', true)
+                this.$websocket.createWebSocket()
+                this.$store.commit('setUserId', res.data.data.id)
+                alert("登录成功"+this.$store.getters.getToken+this.$store.getters.getUserId)
+                this.$router.push('/')
+              } else {
+                console.log(res.data.message)
+              }
+            }
+        ).catch((error) => {
+          Promise.reject(error)
+        })
       }
-    ).catch((error) => {
-      Promise.reject(error)
-    })
-  }
     }
   }
 </script>
