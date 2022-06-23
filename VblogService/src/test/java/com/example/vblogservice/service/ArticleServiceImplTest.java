@@ -1,7 +1,7 @@
 package com.example.vblogservice.service;
 
-import com.example.vblogservice.entity.domian.Article;
 import com.example.vblogservice.entity.domian.ArticleExample;
+import com.example.vblogservice.entity.domian.ArticleWithBLOBs;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -46,7 +46,7 @@ class ArticleServiceImplTest {
 
     @Test
     void insertArticle() {
-        Article article = new Article();
+        ArticleWithBLOBs article = new ArticleWithBLOBs();
         article.setId(null);
         article.setUserId(1);
         article.setContent("unit test add");
@@ -68,7 +68,7 @@ class ArticleServiceImplTest {
 
     @Test
     void updateById() {
-        Article article = new Article();
+        ArticleWithBLOBs article = new ArticleWithBLOBs();
         article.setId(13);
         article.setTag("test");
 

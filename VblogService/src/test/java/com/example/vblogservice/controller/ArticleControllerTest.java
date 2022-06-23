@@ -1,6 +1,7 @@
 package com.example.vblogservice.controller;
 
 import com.example.vblogservice.entity.domian.Article;
+import com.example.vblogservice.entity.domian.ArticleWithBLOBs;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -261,7 +262,7 @@ class ArticleControllerTest {
     @Test
     void insertArticle() throws Exception {
         // create an article obj and morph into JSON string.
-        Article article = new Article();
+        ArticleWithBLOBs article = new ArticleWithBLOBs();
         article.setUserId(1);
         article.setTitle("yet another test title");
         article.setContent("pretend there is the content...");

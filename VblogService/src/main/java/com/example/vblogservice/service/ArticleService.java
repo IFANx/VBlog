@@ -2,6 +2,7 @@ package com.example.vblogservice.service;
 
 import com.example.vblogservice.entity.domian.Article;
 import com.example.vblogservice.entity.domian.ArticleExample;
+import com.example.vblogservice.entity.domian.ArticleWithBLOBs;
 import com.example.vblogservice.mapper.ArticleMapper;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -39,7 +40,7 @@ public class ArticleService {
      * Get all articles that match the example condition.
      */
     @Transactional
-    public List<Article> getArticleByExample(ArticleExample example) {
+    public List<ArticleWithBLOBs> getArticleByExample(ArticleExample example) {
         return articleMapper.selectByExampleWithBLOBs(example);
     }
 
@@ -58,7 +59,7 @@ public class ArticleService {
     }
 
     @Transactional
-    public int insertArticle(Article article) {
+    public int insertArticle(ArticleWithBLOBs article) {
         articleMapper.insertSelective(article);
         return article.getId();
     }
@@ -69,7 +70,7 @@ public class ArticleService {
     }
 
     @Transactional
-    public int updateById(Article article) {
+    public int updateById(ArticleWithBLOBs article) {
         return articleMapper.updateByPrimaryKeySelective(article);
     }
 }

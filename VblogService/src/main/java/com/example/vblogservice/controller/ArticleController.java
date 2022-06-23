@@ -4,6 +4,7 @@ import com.example.vblogservice.constants.StatusCode;
 import com.example.vblogservice.entity.Result;
 import com.example.vblogservice.entity.domian.Article;
 import com.example.vblogservice.entity.domian.ArticleExample;
+import com.example.vblogservice.entity.domian.ArticleWithBLOBs;
 import com.example.vblogservice.service.ArticleService;
 import com.example.vblogservice.util.ResultUtils;
 import com.github.pagehelper.PageInfo;
@@ -42,7 +43,7 @@ public class ArticleController {
     @GetMapping("articles")
     public Result getAllArticles() {
         ArticleExample example = new ArticleExample();// non criteria, get all articles.
-        List<Article> resultData = articleService.getArticleByExample(example);
+        List<ArticleWithBLOBs> resultData = articleService.getArticleByExample(example);
 
         if (resultData.size() == 0)
             return ResultUtils.error("4001", StatusCode.STATUS_CODE_4001 + " Get all articles: No article record yet.");
@@ -93,7 +94,7 @@ public class ArticleController {
         criteria.andTitleEqualTo(title);
         criteria.andTitleIsNotNull();
 
-        List<Article> resultData = articleService.getArticleByExample(example);
+        List<ArticleWithBLOBs> resultData = articleService.getArticleByExample(example);
 
         if (resultData.size() == 0)
             return ResultUtils.error("4001", StatusCode.STATUS_CODE_4001 + String.format(" Get articles by title=%s: No article found.", title));
@@ -124,7 +125,7 @@ public class ArticleController {
         criteria.andTitleLike("%" + title + "%");
         criteria.andTitleIsNotNull();
 
-        List<Article> resultData = articleService.getArticleByExample(example);
+        List<ArticleWithBLOBs> resultData = articleService.getArticleByExample(example);
 
         if (resultData.size() == 0)
             return ResultUtils.error("4001", StatusCode.STATUS_CODE_4001 + String.format(" Fuzzy Query articles by title=%s: No article found.", title));
@@ -168,7 +169,7 @@ public class ArticleController {
         criteria.andTagEqualTo(tag);
         criteria.andTagIsNotNull();
 
-        List<Article> resultData = articleService.getArticleByExample(example);
+        List<ArticleWithBLOBs> resultData = articleService.getArticleByExample(example);
 
         if (resultData.size() == 0)
             return ResultUtils.error("4001", StatusCode.STATUS_CODE_4001 + String.format(" Get articles by tag=%s: No article found.", tag));
@@ -211,7 +212,7 @@ public class ArticleController {
         criteria.andUserIdEqualTo(user_id);
         criteria.andUserIdIsNotNull();
 
-        List<Article> resultData = articleService.getArticleByExample(example);
+        List<ArticleWithBLOBs> resultData = articleService.getArticleByExample(example);
 
         if (resultData.size() == 0)
             return ResultUtils.error("4001", StatusCode.STATUS_CODE_4001 + String.format(" Get articles by user id=%d: No article found.", user_id));
@@ -266,7 +267,7 @@ public class ArticleController {
         criteria.andPublishTimeEqualTo(publishTime);
         criteria.andPublishTimeIsNotNull();
 
-        List<Article> resultData = articleService.getArticleByExample(example);
+        List<ArticleWithBLOBs> resultData = articleService.getArticleByExample(example);
 
         if (resultData.size() == 0)
             return ResultUtils.error("4001", StatusCode.STATUS_CODE_4001 + String.format(" Get articles by publishTime=%tc: No article found.", publishTime));
@@ -297,7 +298,7 @@ public class ArticleController {
         criteria.andPublishTimeBetween(startTime, endTime);
         criteria.andPublishTimeIsNotNull();
 
-        List<Article> resultData = articleService.getArticleByExample(example);
+        List<ArticleWithBLOBs> resultData = articleService.getArticleByExample(example);
 
         if (resultData.size() == 0)
             return ResultUtils.error("4001", StatusCode.STATUS_CODE_4001 + String.format(" Get articles by publishTime range[%tc, %tc]: No article found.", startTime, endTime));
@@ -322,7 +323,7 @@ public class ArticleController {
     }
 
     @PostMapping("article")
-    public Result insertArticle(@RequestBody Article article) {
+    public Result insertArticle(@RequestBody ArticleWithBLOBs article) {
         int affectedRows = articleService.insertArticle(article);
 
         if (affectedRows == 0)
@@ -343,7 +344,7 @@ public class ArticleController {
     }
 
     @PutMapping("article")
-    public Result updateArticle(@RequestBody Article article) {
+    public Result updateArticle(@RequestBody ArticleWithBLOBs article) {
         int affectedRows = articleService.updateById(article);
 
         if (affectedRows == 0)
