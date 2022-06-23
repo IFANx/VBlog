@@ -9,12 +9,15 @@ const login = (account, password) => {
 const register = (account, password) => {
     return api.post('user/register', {account: account, password: password})
 }
-
+const update = (id,account, password,name,email,gender,birthday,description) => {
+    return api.put('user/update', {id:id,account:account, password:password,name:name,email:email,gender:gender,birthday:birthday,description:description})
+}
 
 /** Export all functions. */
 const user = {
     login,
-    register
+    register,
+    update
 }
 
 export default user

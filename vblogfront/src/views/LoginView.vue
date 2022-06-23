@@ -42,6 +42,8 @@
                 this.$store.commit('setAccount', res.data.data.account)
                 this.$store.commit('setOnlineState', true)
                 this.$websocket.createWebSocket()
+                this.$store.commit('setUserId', res.data.data.id)
+                alert("登录成功"+this.$store.getters.getToken+this.$store.getters.getUserId)
                 this.$router.push('/')
               } else {
                 console.log(res.data.message)
