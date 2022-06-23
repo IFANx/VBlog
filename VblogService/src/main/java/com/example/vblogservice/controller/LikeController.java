@@ -56,12 +56,16 @@ public class LikeController {
         }
     }
 
-    @DeleteMapping("like")
-    Result deleteLikeRelation(@RequestBody LikeKey likeKey) {
+    @DeleteMapping("like/{userId}/{articleId}")
+    Result deleteLikeRelation(@PathVariable int userId, @PathVariable int articleId) {
+        LikeKey likeKey = new LikeKey();
+        likeKey.setUserId(userId);
+        likeKey.setArticleId(articleId);
+
         int affectedRows = likeService.deleteLikeRelation(likeKey);
 
         if (affectedRows == 0)
-            return ResultUtils.error("4003", StatusCode.STATUS_CODE_4003 + String.format(" Delete like relation by {userId=%d, articleId=%d}: Delete failed.", likeKey.getUserId(), likeKey.getArticleId()));
+            return ResultUtils.error("4003", StatusCode.STATUS_CODE_4003 + String.format(" Delete like relation by {userId=%d, articleId=%d}: Delete failed.", userId, articleId));
         else return ResultUtils.success("");
     }
 }
