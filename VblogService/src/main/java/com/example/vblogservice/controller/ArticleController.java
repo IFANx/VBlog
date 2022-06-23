@@ -192,46 +192,46 @@ public class ArticleController {
         else return ResultUtils.success(resultData);
     }
 
-    @GetMapping("article/counts/user_id/{user_id}")
-    public Result getArticleCountsByUserId(@PathVariable int user_id) {
+    @GetMapping("article/counts/user_id/{userId}")
+    public Result getArticleCountsByUserId(@PathVariable int userId) {
         // set example, count articles by user id.
         ArticleExample example = new ArticleExample();
         ArticleExample.Criteria criteria = example.createCriteria();
-        criteria.andUserIdEqualTo(user_id);
+        criteria.andUserIdEqualTo(userId);
         criteria.andUserIdIsNotNull();
 
         Long resultData = articleService.getArticleCountsByExample(example);
         return ResultUtils.success(resultData);
     }
 
-    @GetMapping("articles/user_id/{user_id}")
-    public Result getArticleByUserId(@PathVariable int user_id) {
+    @GetMapping("articles/user_id/{userId}")
+    public Result getArticleByUserId(@PathVariable int userId) {
         // set example, search articles by user id.
         ArticleExample example = new ArticleExample();
         ArticleExample.Criteria criteria = example.createCriteria();
-        criteria.andUserIdEqualTo(user_id);
+        criteria.andUserIdEqualTo(userId);
         criteria.andUserIdIsNotNull();
 
         List<ArticleWithBLOBs> resultData = articleService.getArticleByExample(example);
 
         if (resultData.size() == 0)
-            return ResultUtils.error("4001", StatusCode.STATUS_CODE_4001 + String.format(" Get articles by user id=%d: No article found.", user_id));
+            return ResultUtils.error("4001", StatusCode.STATUS_CODE_4001 + String.format(" Get articles by user id=%d: No article found.", userId));
         else return ResultUtils.success(resultData);
     }
 
-    @GetMapping("articles/user_id/paged/{user_id}/{startPage}/{pageSize}")
+    @GetMapping("articles/user_id/paged/{userId}/{startPage}/{pageSize}")
     public Result getArticlesByUserIdPaged(
-            @PathVariable int user_id, @PathVariable int startPage, @PathVariable int pageSize) {
+            @PathVariable int userId, @PathVariable int startPage, @PathVariable int pageSize) {
         // set example, page articles by user id.
         ArticleExample example = new ArticleExample();
         ArticleExample.Criteria criteria = example.createCriteria();
-        criteria.andUserIdEqualTo(user_id);
+        criteria.andUserIdEqualTo(userId);
         criteria.andUserIdIsNotNull();
 
         PageInfo<Article> resultData = articleService.getArticlesByExamplePaged(example, startPage, pageSize);
 
         if (resultData.getTotal() == 0)
-            return ResultUtils.error("4001", StatusCode.STATUS_CODE_4001 + String.format(" Get articles by user id=%d paged: No article found.", user_id));
+            return ResultUtils.error("4001", StatusCode.STATUS_CODE_4001 + String.format(" Get articles by user id=%d paged: No article found.", userId));
         else return ResultUtils.success(resultData);
     }
 

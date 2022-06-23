@@ -38,6 +38,12 @@ const api = {
     },
     post(url, data) {
         return instance.post(url, data)
+    },
+    put(url, data) {
+        return instance.put(url, data)
+    },
+    delete(url, data) {
+        return instance.delete(url, qs.stringify(data))
     }
 }
 
