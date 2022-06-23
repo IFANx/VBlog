@@ -7,10 +7,12 @@ import store from './store'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import qs from 'qs'
+import api from "@/service/api";
 
-
-axios.defaults.baseURL = 'http://localhost:8989'
 axios.defaults.withCredentials = true
 
-createApp(App).use(store).use(router).use(VueAxios,axios).use(qs).mount('#app')
+const app = createApp(App)
+app.config.globalProperties.$api = api
+app.use(store).use(router).use(VueAxios,axios).use(qs)
+app.mount('#app')
 

@@ -7,6 +7,15 @@ export default createStore({
     token: null
   },
   getters: {
+    getOnlineState(state,) {
+      return state.onlineState
+    },
+    getAccount(state) {
+      return state.account
+    },
+    getToken(state) {
+      return state.token
+    }
   },
   mutations: {
     setOnlineState(onlineState, result) {

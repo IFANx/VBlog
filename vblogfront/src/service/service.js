@@ -1,13 +1,16 @@
 import axios from 'axios'
+import store from '@/store/index'
+import qs from 'qs'
 
 const instance = axios.create({
     timeout: 300000,
+    baseURL: 'http://localhost:8989'
 })
 
 instance.interceptors.request.use(
     (config) => {
-        config.headers['BEARER'] = this.$store.state.token
-        config.headers['account'] = this.$store.state.account
+        config.headers['BEARER'] = store.getters.getToken
+        config.headers['account'] = store.getters.getAccount
         return config
     },
     (error) => {
@@ -18,8 +21,8 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
     (response) => {
         let tokenTmp = response.headers['BEARER']
-        if (tokenTmp !== this.$store.state.token) {
-            this.$store.commit('setToken', tokenTmp)
+        if (tokenTmp !== store.getters.getToken) {
+            store.commit('setToken', tokenTmp)
         }
 
         return response
@@ -31,7 +34,7 @@ instance.interceptors.response.use(
 
 const api = {
     get(url, data) {
-        return instance.get(url, data)
+        return instance.get(url, qs.stringify(data))
     },
     post(url, data) {
         return instance.post(url, data)
