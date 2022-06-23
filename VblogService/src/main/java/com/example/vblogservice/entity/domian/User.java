@@ -17,8 +17,6 @@ public class User {
 
     private Date birthday;
 
-    private String description;
-
     public Integer getId() {
         return id;
     }
@@ -73,13 +71,5 @@ public class User {
 
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description == null ? null : description.trim();
     }
 }

@@ -2,9 +2,10 @@ package com.example.vblogservice.mapper;
 
 import com.example.vblogservice.entity.domian.Comment;
 import com.example.vblogservice.entity.domian.CommentExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface CommentMapper {

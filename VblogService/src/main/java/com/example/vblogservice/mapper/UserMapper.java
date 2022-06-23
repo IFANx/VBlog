@@ -2,9 +2,11 @@ package com.example.vblogservice.mapper;
 
 import com.example.vblogservice.entity.domian.User;
 import com.example.vblogservice.entity.domian.UserExample;
-import java.util.List;
+import com.example.vblogservice.entity.domian.UserWithBLOBs;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface UserMapper {
@@ -14,29 +16,29 @@ public interface UserMapper {
 
     int deleteByPrimaryKey(Integer id);
 
-    int insert(User record);
+    int insert(UserWithBLOBs record);
 
-    int insertSelective(User record);
+    int insertSelective(UserWithBLOBs record);
 
-    List<User> selectByExampleWithBLOBs(UserExample example);
+    List<UserWithBLOBs> selectByExampleWithBLOBs(UserExample example);
 
     List<User> selectByExample(UserExample example);
 
-    User selectByPrimaryKey(Integer id);
+    UserWithBLOBs selectByPrimaryKey(Integer id);
 
-    int updateByExampleSelective(@Param("record") User record, @Param("example") UserExample example);
+    int updateByExampleSelective(@Param("record") UserWithBLOBs record, @Param("example") UserExample example);
 
-    int updateByExampleWithBLOBs(@Param("record") User record, @Param("example") UserExample example);
+    int updateByExampleWithBLOBs(@Param("record") UserWithBLOBs record, @Param("example") UserExample example);
 
     int updateByExample(@Param("record") User record, @Param("example") UserExample example);
 
-    int updateByPrimaryKeySelective(User record);
+    int updateByPrimaryKeySelective(UserWithBLOBs record);
 
-    int updateByPrimaryKeyWithBLOBs(User record);
+    int updateByPrimaryKeyWithBLOBs(UserWithBLOBs record);
 
     int updateByPrimaryKey(User record);
 
     Integer selectMaxID();
 
-    int update(User user);
+//    int update(User user);
 }

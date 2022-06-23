@@ -2,6 +2,7 @@ package com.example.vblogservice.service;
 
 import com.example.vblogservice.entity.domian.User;
 import com.example.vblogservice.entity.domian.UserExample;
+import com.example.vblogservice.entity.domian.UserWithBLOBs;
 import com.example.vblogservice.mapper.UserMapper;
 import com.example.vblogservice.util.MD5;
 import org.springframework.stereotype.Service;
@@ -39,7 +40,7 @@ public class UserServiceImpl implements UserService {
         userExample.createCriteria().andAccountEqualTo(account);
         List<User> users = userMapper.selectByExample(userExample);
         if(!users.isEmpty()) return 0x7fffff;
-        User user = new User();
+        UserWithBLOBs user = new UserWithBLOBs();
         user.setPassword(md5.getCiphertext(password));
         user.setAccount(account);
         user.setBirthday(new Date());
@@ -67,11 +68,11 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    @Transactional
-    @Override
-    public int update(User user){
-        return userMapper.update(user);
-    }
+//    @Transactional
+//    @Override
+//    public int update(User user){
+//        return userMapper.update(user);
+//    }
 
     @Transactional
     @Override
