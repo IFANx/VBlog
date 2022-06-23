@@ -35,8 +35,19 @@
     },
     methods:{
       login(){
-        this.axios.post('/user/login', {account: this.account, password: this.password}).then(res => {
-          console.log(res.data)
+        this.$api.user.login(this.account, this.password).then(
+            (res) => {
+              if(res.data.code === '0000') {
+                this.$store.commit('setToken', res.data.message)
+                this.$store.commit('setAccount', res.data.data.account)
+                this.$store.commit('setOnlineState', true)
+                this.$router.push('/')
+              } else {
+                console.log(res.data.message)
+              }
+            }
+        ).catch((error) => {
+          Promise.reject(error)
         })
       }
     }
