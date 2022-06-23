@@ -49,6 +49,7 @@ public class VerifyInterceptor implements HandlerInterceptor{
         if(redisService.getToken(account) != null) {
             if(webTokenService.isExpiration(token)) {
                 redisService.setTokenStore(account);
+                response.setHeader("BEARER", redisService.getToken(account));
             }
             return true;
         }
