@@ -41,6 +41,7 @@
                 this.$store.commit('setToken', res.data.message)
                 this.$store.commit('setAccount', res.data.data.account)
                 this.$store.commit('setOnlineState', true)
+                this.$websocket.createWebSocket()
                 this.$router.push('/')
               } else {
                 console.log(res.data.message)
