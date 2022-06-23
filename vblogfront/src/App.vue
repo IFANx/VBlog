@@ -21,8 +21,8 @@
         </form>
 
         <div class="text-end">
-          <button type="button" class="btn btn-outline-light me-2">Login</button>
-          <button type="button" class="btn btn-warning">Sign-up</button>
+          <button type="button" class="btn btn-outline-light me-2" @click="LoginView">Login</button>
+          <button type="button" class="btn btn-warning" @click="SignUpView">Sign-up</button>
         </div>
       </div>
     </div>
@@ -40,6 +40,20 @@
 
   <router-view/>
 </template>
+<script>
+  export default {
+    name: 'App',
+    methods:{
+      //Button 跳转到login或者signup页面
+      LoginView(){
+        this.$router.push("Login")
+      },
+      SignUpView(){
+        this.$router.push("SignUp")
+      }
+    }
+  }
+</script>
 
 <style>
 #app {
