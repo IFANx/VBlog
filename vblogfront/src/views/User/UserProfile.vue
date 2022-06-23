@@ -3,11 +3,10 @@
         <main class="userprofile">
             <div class="py-5 text-center">
                 <img class="d-block mx-auto mb-4" src="../../../src/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
-                <h2>Profile</h2>
+<!--                <h2>Profile</h2>-->
             </div>
             <div class="row g-5">
                 <div class="container-sm">
-<!--                    <h4 class="mb-3">Billing address</h4>-->
                     <form class="needs-validation" novalidate>
                         <div class="row g-3">
                             <div class="col-12">
@@ -81,7 +80,9 @@
                         <button class="w-100 btn btn-primary btn-lg" type="submit" @click="update">提交个人信息</button>
                     </form>
                 </div>
+
             </div>
+
         </main>
 
         <footer class="my-5 pt-5 text-muted text-center text-small">
