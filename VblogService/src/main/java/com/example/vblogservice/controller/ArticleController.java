@@ -23,8 +23,8 @@ public class ArticleController {
         this.articleService = articleService;
     }
 
-    @GetMapping("article/{id}")
-    public Result getArticleById(@PathVariable int id) {
+    @GetMapping("article")
+    public Result getArticleById(int id) {
         Article result = articleService.getArticleById(id);
 
         if (result == null)
@@ -50,8 +50,8 @@ public class ArticleController {
         else return ResultUtils.success(resultData);
     }
 
-    @GetMapping("articles/paged/{startPage}/{pageSize}")
-    public Result getArticlesPaged(@PathVariable int startPage, @PathVariable int pageSize) {
+    @GetMapping("articles/paged")
+    public Result getArticlesPaged(int startPage, int pageSize) {
         ArticleExample example = new ArticleExample();// non criteria, get all articles.
         PageInfo<Article> resultData = articleService.getArticlesByExamplePaged(example, startPage, pageSize);
 
@@ -60,8 +60,8 @@ public class ArticleController {
         else return ResultUtils.success(resultData);
     }
 
-    @GetMapping("article/counts/title/{title}")
-    public Result getArticleCountsByTitle(@PathVariable String title) {
+    @GetMapping("article/counts/title")
+    public Result getArticleCountsByTitle(String title) {
         // set example, count articles by title.
         ArticleExample example = new ArticleExample();
         ArticleExample.Criteria criteria = example.createCriteria();
@@ -73,8 +73,8 @@ public class ArticleController {
         return ResultUtils.success(resultData);
     }
 
-    @GetMapping("article/counts/title/fuzzy/{title}")
-    public Result getArticleFuzzyCountsByTitle(@PathVariable String title) {
+    @GetMapping("article/counts/title/fuzzy")
+    public Result getArticleFuzzyCountsByTitle(String title) {
         // set example, count articles by title.
         ArticleExample example = new ArticleExample();
         ArticleExample.Criteria criteria = example.createCriteria();
@@ -86,8 +86,8 @@ public class ArticleController {
         return ResultUtils.success(resultData);
     }
 
-    @GetMapping("articles/title/{title}")
-    public Result getArticlesByTitle(@PathVariable String title) {
+    @GetMapping("articles/title")
+    public Result getArticlesByTitle(String title) {
         // set example, search articles by title.
         ArticleExample example = new ArticleExample();
         ArticleExample.Criteria criteria = example.createCriteria();
@@ -101,9 +101,8 @@ public class ArticleController {
         else return ResultUtils.success(resultData);
     }
 
-    @GetMapping("articles/title/paged/{title}/{startPage}/{pageSize}")
-    public Result getArticlesByTitlePaged(
-            @PathVariable String title, @PathVariable int startPage, @PathVariable int pageSize) {
+    @GetMapping("articles/title/paged")
+    public Result getArticlesByTitlePaged(String title, int startPage, int pageSize) {
         // set example, page articles by title.
         ArticleExample example = new ArticleExample();
         ArticleExample.Criteria criteria = example.createCriteria();
@@ -117,8 +116,8 @@ public class ArticleController {
         else return ResultUtils.success(resultData);
     }
 
-    @GetMapping("articles/title/fuzzy/{title}")
-    public Result getArticleByTitleFuzzy(@PathVariable String title) {
+    @GetMapping("articles/title/fuzzy")
+    public Result getArticleByTitleFuzzy(String title) {
         // set example, search articles by title.
         ArticleExample example = new ArticleExample();
         ArticleExample.Criteria criteria = example.createCriteria();
@@ -132,9 +131,8 @@ public class ArticleController {
         else return ResultUtils.success(resultData);
     }
 
-    @GetMapping("articles/title/fuzzy/paged/{title}/{startPage}/{pageSize}")
-    public Result getArticlesByTitleFuzzyPaged(
-            @PathVariable String title, @PathVariable int startPage, @PathVariable int pageSize) {
+    @GetMapping("articles/title/fuzzy/paged")
+    public Result getArticlesByTitleFuzzyPaged(String title, int startPage, int pageSize) {
         // set example, page articles by title.
         ArticleExample example = new ArticleExample();
         ArticleExample.Criteria criteria = example.createCriteria();
@@ -149,8 +147,8 @@ public class ArticleController {
     }
 
 
-    @GetMapping("article/counts/tag/{tag}")
-    public Result getArticleCountsByTag(@PathVariable String tag) {
+    @GetMapping("article/counts/tag")
+    public Result getArticleCountsByTag(String tag) {
         // set example, count articles by tag.
         ArticleExample example = new ArticleExample();
         ArticleExample.Criteria criteria = example.createCriteria();
@@ -161,8 +159,8 @@ public class ArticleController {
         return ResultUtils.success(resultData);
     }
 
-    @GetMapping("articles/tag/{tag}")
-    public Result getArticleByTag(@PathVariable String tag) {
+    @GetMapping("articles/tag")
+    public Result getArticleByTag(String tag) {
         // set example, search articles by tag.
         ArticleExample example = new ArticleExample();
         ArticleExample.Criteria criteria = example.createCriteria();
@@ -176,9 +174,8 @@ public class ArticleController {
         else return ResultUtils.success(resultData);
     }
 
-    @GetMapping("articles/tag/paged/{tag}/{startPage}/{pageSize}")
-    public Result getArticlesByTagPaged(
-            @PathVariable String tag, @PathVariable int startPage, @PathVariable int pageSize) {
+    @GetMapping("articles/tag/paged")
+    public Result getArticlesByTagPaged(String tag, int startPage, int pageSize) {
         // set example, page articles by tag.
         ArticleExample example = new ArticleExample();
         ArticleExample.Criteria criteria = example.createCriteria();
@@ -192,8 +189,8 @@ public class ArticleController {
         else return ResultUtils.success(resultData);
     }
 
-    @GetMapping("article/counts/user_id/{userId}")
-    public Result getArticleCountsByUserId(@PathVariable int userId) {
+    @GetMapping("article/counts/user_id")
+    public Result getArticleCountsByUserId(int userId) {
         // set example, count articles by user id.
         ArticleExample example = new ArticleExample();
         ArticleExample.Criteria criteria = example.createCriteria();
@@ -204,8 +201,8 @@ public class ArticleController {
         return ResultUtils.success(resultData);
     }
 
-    @GetMapping("articles/user_id/{userId}")
-    public Result getArticleByUserId(@PathVariable int userId) {
+    @GetMapping("articles/user_id")
+    public Result getArticleByUserId(int userId) {
         // set example, search articles by user id.
         ArticleExample example = new ArticleExample();
         ArticleExample.Criteria criteria = example.createCriteria();
@@ -219,9 +216,8 @@ public class ArticleController {
         else return ResultUtils.success(resultData);
     }
 
-    @GetMapping("articles/user_id/paged/{userId}/{startPage}/{pageSize}")
-    public Result getArticlesByUserIdPaged(
-            @PathVariable int userId, @PathVariable int startPage, @PathVariable int pageSize) {
+    @GetMapping("articles/user_id/paged")
+    public Result getArticlesByUserIdPaged(int userId, int startPage, int pageSize) {
         // set example, page articles by user id.
         ArticleExample example = new ArticleExample();
         ArticleExample.Criteria criteria = example.createCriteria();
@@ -235,8 +231,8 @@ public class ArticleController {
         else return ResultUtils.success(resultData);
     }
 
-    @GetMapping("article/counts/publish_time/{publishTime}")
-    public Result getArticleCountsByPublishTime(@PathVariable Date publishTime) {
+    @GetMapping("article/counts/publish_time")
+    public Result getArticleCountsByPublishTime(Date publishTime) {
         // set example, search articles by publish time.
         ArticleExample example = new ArticleExample();
         ArticleExample.Criteria criteria = example.createCriteria();
@@ -247,8 +243,8 @@ public class ArticleController {
         return ResultUtils.success(resultData);
     }
 
-    @GetMapping("article/counts/publish_time/{startTime}/{endTime}")
-    public Result getArticleCountsByPublishTimeRange(@PathVariable Date startTime, @PathVariable Date endTime) {
+    @GetMapping("article/counts/publish_time/range")
+    public Result getArticleCountsByPublishTimeRange(Date startTime, Date endTime) {
         // set example, search articles by publish time range.
         ArticleExample example = new ArticleExample();
         ArticleExample.Criteria criteria = example.createCriteria();
@@ -259,8 +255,8 @@ public class ArticleController {
         return ResultUtils.success(resultData);
     }
 
-    @GetMapping("articles/publish_time/{publishTime}")
-    public Result getArticlesByPublishTime(@PathVariable Date publishTime) {
+    @GetMapping("articles/publish_time")
+    public Result getArticlesByPublishTime(Date publishTime) {
         // set example, search articles by title.
         ArticleExample example = new ArticleExample();
         ArticleExample.Criteria criteria = example.createCriteria();
@@ -274,9 +270,8 @@ public class ArticleController {
         else return ResultUtils.success(resultData);
     }
 
-    @GetMapping("articles/publish_time/paged/{publishTime}/{startPage}/{pageSize}")
-    public Result getArticlesByPublishTimePaged(
-            @PathVariable Date publishTime, @PathVariable int startPage, @PathVariable int pageSize) {
+    @GetMapping("articles/publish_time/paged")
+    public Result getArticlesByPublishTimePaged(Date publishTime, int startPage, int pageSize) {
         // set example, page articles by publish time.
         ArticleExample example = new ArticleExample();
         ArticleExample.Criteria criteria = example.createCriteria();
@@ -290,8 +285,8 @@ public class ArticleController {
         else return ResultUtils.success(resultData);
     }
 
-    @GetMapping("articles/publish_time/{startTime}/{endTime}")
-    public Result getArticlesByPublishTimeRange(@PathVariable Date startTime, @PathVariable Date endTime) {
+    @GetMapping("articles/publish_time/range")
+    public Result getArticlesByPublishTimeRange(Date startTime, Date endTime) {
         // set example, search articles by title.
         ArticleExample example = new ArticleExample();
         ArticleExample.Criteria criteria = example.createCriteria();
@@ -305,10 +300,8 @@ public class ArticleController {
         else return ResultUtils.success(resultData);
     }
 
-    @GetMapping("articles/publish_time/paged/{startTime}/{endTime}/{startPage}/{pageSize}")
-    public Result getArticlesByPublishTimeRangePaged(
-            @PathVariable Date startTime, @PathVariable Date endTime,
-            @PathVariable int startPage, @PathVariable int pageSize) {
+    @GetMapping("articles/publish_time/range/paged")
+    public Result getArticlesByPublishTimeRangePaged(Date startTime, Date endTime, int startPage, int pageSize) {
         // set example, search articles by title.
         ArticleExample example = new ArticleExample();
         ArticleExample.Criteria criteria = example.createCriteria();
@@ -334,8 +327,8 @@ public class ArticleController {
         }
     }
 
-    @DeleteMapping("article/{id}")
-    public Result deleteArticle(@PathVariable int id) {
+    @DeleteMapping("article")
+    public Result deleteArticle(int id) {
         int affectedRows = articleService.deleteArticleById(id);
 
         if (affectedRows == 0)

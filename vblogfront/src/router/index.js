@@ -41,6 +41,11 @@ const routes = [
     component: CommentView
   },
   {
+    path: '/article',
+    name: 'article',
+    component: () => import('../views/article/ArticleView')
+  },
+  {
     path: '/sidebar',
     name: 'sidebar',
     component: SideBars
