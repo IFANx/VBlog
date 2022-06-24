@@ -74,7 +74,7 @@ export default {
             if (response.data.code === '0000') {
               // set article if request success.
               this.article = response.data.data
-              this.fetchUserInfo(this.article.userId)
+              this.fetchUserInfo(this.article.userId) // if article received, use it to access user info.
             } else {
               console.log(response.data.message)
             }
