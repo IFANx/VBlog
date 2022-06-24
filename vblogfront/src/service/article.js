@@ -51,7 +51,7 @@ const countArticleByPublishTime = (publishTime) => {
 }
 
 const countArticleByPublishTimeRange = (startTime, endTime) => {
-    return api.get('article/counts/publish_time', {startTime: startTime, endTime: endTime})
+    return api.get('article/counts/publish_time/range', {startTime: startTime, endTime: endTime})
 }
 
 const getArticlesByPublishTimePaged = (publishTime, startPage, pageSize) => {
@@ -59,7 +59,7 @@ const getArticlesByPublishTimePaged = (publishTime, startPage, pageSize) => {
 }
 
 const getArticlesByPublishTimeRangePaged = (startTime, endTime, startPage, pageSize) => {
-    return api.get('articles/publish_time/paged', {
+    return api.get('articles/publish_time/range/paged', {
         startTime: startTime,
         endTime: endTime,
         startPage: startPage,

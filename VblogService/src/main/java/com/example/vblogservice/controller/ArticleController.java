@@ -243,7 +243,7 @@ public class ArticleController {
         return ResultUtils.success(resultData);
     }
 
-    @GetMapping("article/counts/publish_time")
+    @GetMapping("article/counts/publish_time/range")
     public Result getArticleCountsByPublishTimeRange(Date startTime, Date endTime) {
         // set example, search articles by publish time range.
         ArticleExample example = new ArticleExample();
@@ -285,7 +285,7 @@ public class ArticleController {
         else return ResultUtils.success(resultData);
     }
 
-    @GetMapping("articles/publish_time")
+    @GetMapping("articles/publish_time/range")
     public Result getArticlesByPublishTimeRange(Date startTime, Date endTime) {
         // set example, search articles by title.
         ArticleExample example = new ArticleExample();
@@ -300,7 +300,7 @@ public class ArticleController {
         else return ResultUtils.success(resultData);
     }
 
-    @GetMapping("articles/publish_time/paged")
+    @GetMapping("articles/publish_time/range/paged")
     public Result getArticlesByPublishTimeRangePaged(Date startTime, Date endTime, int startPage, int pageSize) {
         // set example, search articles by title.
         ArticleExample example = new ArticleExample();
