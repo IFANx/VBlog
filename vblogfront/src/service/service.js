@@ -43,7 +43,7 @@ const api = {
         return instance.put(url, data)
     },
     delete(url, data) {
-        return instance.delete(url, qs.stringify(data))
+        return instance.delete(url + '?' + qs.stringify(data))
     }
 }
 
