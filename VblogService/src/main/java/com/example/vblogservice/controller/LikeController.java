@@ -9,6 +9,7 @@ import com.example.vblogservice.service.LikeService;
 import com.example.vblogservice.util.ResultUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -46,7 +47,7 @@ public class LikeController {
     }
 
     @PostMapping("like")
-    Result addLikeRelation(@RequestBody LikeKey likeKey) {
+    Result addLikeRelation(@RequestBody LikeKey likeKey) throws IOException {
         int affectedRows = likeService.addLikeRelation(likeKey);
 
         if (affectedRows == 0)

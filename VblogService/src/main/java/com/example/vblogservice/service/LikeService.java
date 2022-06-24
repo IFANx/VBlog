@@ -1,5 +1,6 @@
 package com.example.vblogservice.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.example.vblogservice.entity.domian.*;
 import com.example.vblogservice.mapper.ArticleMapper;
 import com.example.vblogservice.mapper.LikeMapper;
@@ -7,6 +8,8 @@ import com.example.vblogservice.mapper.UserMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.websocket.Session;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,10 +24,14 @@ public class LikeService {
     final
     UserMapper userMapper;
 
-    public LikeService(LikeMapper likeMapper, ArticleMapper articleMapper, UserMapper userMapper) {
+    final
+    NotificationWebsocketServer notificationWebsocketServer;
+
+    public LikeService(LikeMapper likeMapper, ArticleMapper articleMapper, UserMapper userMapper, NotificationWebsocketServer notificationWebsocketServer) {
         this.likeMapper = likeMapper;
         this.articleMapper = articleMapper;
         this.userMapper = userMapper;
+        this.notificationWebsocketServer = notificationWebsocketServer;
     }
 
     /**
@@ -96,7 +103,14 @@ public class LikeService {
      * @return affected rows, 0 means no effect, aka failed.
      */
     @Transactional
-    public int addLikeRelation(LikeKey likeKey) {
+    public int addLikeRelation(LikeKey likeKey) throws IOException {
+        Article article = articleMapper.selectByPrimaryKey(likeKey.getArticleId());
+        User user = userMapper.selectByPrimaryKey(article.getUserId());
+        String account = user.getAccount();
+        JSONObject obj = new JSONObject(0);
+        obj.put("to", account);
+        obj.put("message", userMapper.selectByPrimaryKey(likeKey.getUserId()).getName() + "点赞了你的文章");
+        notificationWebsocketServer.OnMessage(obj.toJSONString(), null);
         return likeMapper.insert(likeKey);
     }
 
