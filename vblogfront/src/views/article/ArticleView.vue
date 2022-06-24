@@ -4,17 +4,21 @@
       <div class="col-md-12">
         <h2 class="pb-4 mb-4 fst-italic border-bottom">
           Current Article id = {{ this.$route.query.id }}
+          {{this.article.title}}
         </h2>
 
         <article class="blog-post">
-          <p class="blog-post-meta">January 1, 2021 by <a href="#">Mark</a></p>
-          <p>This blog post shows a few different types of content that’s supported and styled with Bootstrap. Basic
-            typography, lists, tables, images, code, and more are all supported as expected.</p>
+          <p class="blog-post-meta">{{this.article.publishTime}} by <a href="#">uid={{this.article.userId}}</a></p>
+          <p class="blog-post-meta">
+            comment count = {{this.article.commentCount}}
+            like count = {{this.article.likeCount}}
+            read count = {{this.article.readCount}}
+          </p>
+
           <hr>
-          <p>This is some additional paragraph placeholder content. It has been written to fill the available space and
-            show how a longer snippet of text affects the surrounding content. We'll repeat it often to keep the
-            demonstration flowing, so be on the lookout for this exact same string of text.</p>
-          <img src="../../../src/assets/img/3.png">
+          <p>{{this.article.content}}</p>
+          <img v-if="article.image==null" src="../../../src/assets/img/3.png">
+<!--          <img v-if="article.image!=null" src="">-->
         </article>
 
         <div class="table table-borderless">
@@ -64,17 +68,17 @@ export default {
           content: "shit2"
         }
       ],
-      article: null // load when initialized.
+      article: {} // load when initialized.
     }
   },
   methods: {
     fetchArticle(id) {
       this.$api.article.getArticleById(id).then(
-          response => {
-            console.log(response)
-            if (response.data.statusCode === '0000') {
+          (response) => {
+            console.log(response) // debug output
+            if (response.data.code === '0000') {
               // set article if request success.
-              this.article = response.data
+              this.article = response.data.data
             } else {
               console.log(response.data.message)
             }
