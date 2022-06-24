@@ -9,8 +9,8 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
     (config) => {
-        config.headers['BEARER'] = store.getters.getToken
-        config.headers['account'] = store.getters.getAccount
+        config.headers['BEARER'] = sessionStorage.getItem('Token')
+        config.headers['account'] = sessionStorage.getItem('Account')
         return config
     },
     (error) => {
@@ -23,6 +23,7 @@ instance.interceptors.response.use(
         let tokenTmp = response.headers['BEARER']
         if (tokenTmp !== store.getters.getToken) {
             store.commit('setToken', tokenTmp)
+            sessionStorage.setItem('Account', tokenTmp)
         }
 
         return response
