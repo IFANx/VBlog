@@ -8,13 +8,13 @@
             Like Article
             </thead>
             <tbody>
-            <tr v-for="item in LikeArticle" v-bind:key="item.title">
+            <tr v-for="item in likeArticle" v-bind:key="item.id">
         <div class="col-md-12">
             <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                 <div class="col p-4 d-flex flex-column position-static">
 <!--                    <strong class="d-inline-block mb-2 text-primary">World</strong>-->
-                    <h3 class="mb-0">{{ item.title }}</h3>
-                    <div class="mb-1 text-muted">{{item.author}}  {{ item.publishtime }}</div>
+                    <h3 class="mb-0">{{item.title}}</h3>
+                    <div class="mb-1 text-muted">{{item.publishTime}}</div>
                     <div class="mb-1 text-muted">{{item.content}}</div>
                     <p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
                     <a href="#" class="stretched-link">Continue reading</a>
@@ -26,53 +26,9 @@
             </div>
         </div>
             </tr>
-
-
-            </tbody>
-        </table>
-        <table>
-            <thead class="toast-header">
-            Like Article
-            </thead>
-            <tbody>
-            <tr v-for="item in LikeArticle" v-bind:key="item.title">
-                <div class="col-md-12">
-                    <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                        <div class="col p-4 d-flex flex-column position-static">
-                            <!--                    <strong class="d-inline-block mb-2 text-primary">World</strong>-->
-                            <h3 class="mb-0">{{ item.title }}</h3>
-                            <div class="mb-1 text-muted">{{ item.publishTime }}</div>
-                            <div class="mb-1 text-muted">{{item.content}}</div>
-                            <p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
-                            <a href="#" class="stretched-link">Continue reading</a>
-
-                        </div>
-                        <div class="col-auto d-none d-lg-block">
-                            <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-                        </div>
-                    </div>
-                </div>
-            </tr>
-
-
             </tbody>
         </table>
 
-<!--        <div class="col-md-12">-->
-<!--            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">-->
-<!--                <div class="col p-4 d-flex flex-column position-static">-->
-<!--                    <strong class="d-inline-block mb-2 text-success">Design</strong>-->
-<!--                    <h3 class="mb-0">Post title</h3>-->
-<!--                    <div class="mb-1 text-muted">Nov 11</div>-->
-<!--                    <p class="mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>-->
-<!--                    <a href="#" class="stretched-link">Continue reading</a>-->
-<!--                </div>-->
-<!--                <div class="col-auto d-none d-lg-block" >-->
-<!--                    <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>-->
-
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
 
     </div>
 
@@ -87,21 +43,7 @@
     components: {SideBars},
     data () {
       return {
-        LikeArticle: [
-          {
-            title: '',
-            commentCount: '',
-            content:'',
-            likeCount: '',
-            publishTime: '',
-            readCount:'',
-            subscribeCount: '',
-            tag: '',
-            userId: '',
-            id: ''
-          }
-        ],
-        
+        likeArticle: {}
       }
     },
     methods: {
@@ -110,18 +52,8 @@
           (response) => {
             console.log(response) // debug output
             if (response.data.code === '0000') {
-              let data = response.data.data
-              // set article if request success.
-              this.id=data.id
-              this.userId=data.userId
-              this.title=data.title
-              this.commentCount=data.commentCount
-              this.content=data.content
-              this.likeCount=data.likeCount
-              this.publishTime=data.publishTime
-              this.readCount=data.readCount
-              this.subscribeCount=data.subscribeCount
-              this.tag=data.tag
+              this.likeArticle = response.data.data
+              console.log(this.likeArticle)
             } else {
               console.log(response.data.message)
             }
