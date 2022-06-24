@@ -39,8 +39,11 @@
             (res) => {
               if(res.data.code === '0000') {
                 this.$store.commit('setToken', res.data.message)
+                sessionStorage.setItem('Token', res.data.message)
                 this.$store.commit('setAccount', res.data.data.account)
+                sessionStorage.setItem('Account', res.data.data.account)
                 this.$store.commit('setOnlineState', true)
+                sessionStorage.setItem('UserId', res.data.data.id)
                 this.$websocket.createWebSocket()
                 this.$store.commit('setUserId', res.data.data.id)
                 alert("登录成功，为您跳转到主页面")
