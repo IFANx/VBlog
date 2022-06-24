@@ -71,6 +71,7 @@ export default {
     fetchArticle(id) {
       this.$api.article.getArticleById(id).then(
           response => {
+            console.log(response)
             if (response.data.statusCode === '0000') {
               // set article if request success.
               this.article = response.data
