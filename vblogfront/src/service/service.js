@@ -21,7 +21,7 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
     (response) => {
         let tokenTmp = response.headers['BEARER']
-        if (tokenTmp !== store.getters.getToken) {
+        if (tokenTmp !== null && tokenTmp !== store.getters.getToken) {
             store.commit('setToken', tokenTmp)
         }
 
