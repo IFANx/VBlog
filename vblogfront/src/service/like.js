@@ -7,11 +7,11 @@ const countLikeByUserId = (userId) => {
 }
 
 const getLikeListByUserId = (userId) => {
-    return api.get('like/what/', {userId: userId})
+    return api.get('like/what', {userId: userId})
 }
 
 const getLikerListByArticleId = (articleId) => {
-    return api.get('like/by-whom/', {articleId: articleId})
+    return api.get('like/by-whom', {articleId: articleId})
 }
 
 /**

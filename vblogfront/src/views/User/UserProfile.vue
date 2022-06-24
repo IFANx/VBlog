@@ -3,7 +3,7 @@
     <div class="container">
         <main class="userprofile">
             <div class="py-5 text-center">
-                <img class="header-img" src="../../../src/assets/img/doge.png" alt="" width="150" height="150">
+                <img v-if="this.portrait==null" class="header-img" src="../../../src/assets/img/doge.png" alt="" width="150" height="150">
 <!--                <h2>Profile</h2>-->
             </div>
             <div class="row g-5" >
@@ -110,6 +110,7 @@
         gender:'',
         birthday:'',
         description:'',
+        portrait:'',
       }
     },
     methods:{
@@ -128,6 +129,7 @@
               this.gender=data.gender
               this.birthday=data.birthday.substr(0,10)
               this.description=data.description
+              this.portrait=data.portrait
             } else {
               console.log(response.data.message)
             }
