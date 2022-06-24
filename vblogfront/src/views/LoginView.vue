@@ -48,7 +48,7 @@
                 this.$store.commit('setUserId', res.data.data.id)
                 alert("登录成功，为您跳转到主页面")
                 this.$router.push('/')
-              } else if(res.data,code==1001) {
+              } else if(res.data.code===`1001`) {
                 alert("账号重复登录，已为您跳转到主页面！")
                 this.$router.push('/')
               }
