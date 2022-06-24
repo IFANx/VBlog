@@ -14,7 +14,7 @@
                                 <label for="account" class="form-label">Account</label>
                                 <div class="input-group has-validation">
                                     <span class="input-group-text">#</span>
-                                <input v-model="account" type="text" class="form-control" id="account" placeholder="Account" disabled>
+                                <input v-model="account" type="text" class="form-control" id="account" placeholder="account" disabled>
                                 <div class="invalid-feedback">
                                     Valid Account is required.
                                 </div>
@@ -103,7 +103,7 @@
     data () {
       return {
         id: '',
-        // account: '',
+        account: '',
         password:'',
         name: '',
         email:'',
@@ -113,13 +113,35 @@
       }
     },
     methods:{
+      getuser(id) {
+        this.$api.user.getUserById(id).then(
+          (response) => {
+            console.log(response) // debug output
+            if (response.data.code === '0000') {
+              let data=response.data.data
+              // set article if request success.
+              this.user = response.data.data
+              this.account=data.account
+              this.name=data.name
+              this.password=data.password
+              this.email=data.email
+              this.gender=data.gender
+              this.birthday=data.birthday.substr(0,10)
+              this.description=data.description
+            } else {
+              console.log(response.data.message)
+            }
+          }
+        ).catch((error) => {
+          Promise.reject(error)
+        })
+      },
       update(){
         console.log(this.$store.getters.getUserId)
         this.$api.user.update(this.id=this.$store.getters.getUserId, this.password,this.name,this.email,this.gender,this.birthday,this.description).then(
           (res) => {
             if(res.data.code === '0000') {
-              alert(res.data.message)
-              this.$router.push('/')
+              this.$router.push('/userprofile?id=',this.$store.getters.getUserId)
             } else {
               console.log(res.data.message)
             }
@@ -128,6 +150,9 @@
           Promise.reject(error)
         })
       }
+    },
+    mounted() {
+      this.getuser(this.$route.query.id)
     }
 
 

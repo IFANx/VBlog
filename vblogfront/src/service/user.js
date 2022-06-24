@@ -9,6 +9,9 @@ const login = (account, password) => {
 const register = (account, password) => {
     return api.post('user/register', {account: account, password: password})
 }
+const getUserById = (id) => {
+    return api.get('user/user', {id:id})
+}
 const update = (id, password,name,email,gender,birthday,description) => {
     return api.put('user/update', {id:id, password:password,name:name,email:email,gender:gender,birthday:birthday,description:description})
 }
@@ -17,7 +20,8 @@ const update = (id, password,name,email,gender,birthday,description) => {
 const user = {
     login,
     register,
-    update
+    update,
+    getUserById
 }
 
 export default user
