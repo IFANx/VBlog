@@ -77,7 +77,7 @@ public class UserController {
         return ResultUtils.success();
     }
 
-    @GetMapping(value = "/user",produces = "application/json;charset=UTF-8")
+    @GetMapping(value = "",produces = "application/json;charset=UTF-8")
     public Result getUserById(int id){
         User singleUser = userService.getSingleUser(id);
         if(singleUser == null) return ResultUtils.error("1400","id未查询出用户");

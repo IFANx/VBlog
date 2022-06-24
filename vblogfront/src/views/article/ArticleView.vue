@@ -2,13 +2,14 @@
   <main class="container">
     <div class="row g-5">
       <div class="col-md-12">
+        <!--  Title HERE-->
         <h2 class="pb-4 mb-4 fst-italic border-bottom">
-          Current Article id = {{ this.$route.query.id }}
           {{ this.article.title }}
         </h2>
 
+        <!--    Article Area  -->
         <article class="blog-post">
-          <p class="blog-post-meta">{{ this.article.publishTime }} by <a href="#">uid={{ this.article.userId }}</a></p>
+          <p class="blog-post-meta">{{ this.article.publishTime }} by <a>{{ this.publisher.name }}</a></p>
           <p class="blog-post-meta">
             comment count = {{ this.article.commentCount }}
             like count = {{ this.article.likeCount }}
@@ -21,8 +22,8 @@
           <!--          <img v-if="article.image!=null" src="">-->
         </article>
 
+        <!--    Comment Area    -->
         <div class="table table-borderless">
-
           <table class="table align-middle">
             <thead class="toast-header">
             Comment
@@ -73,6 +74,7 @@ export default {
             if (response.data.code === '0000') {
               // set article if request success.
               this.article = response.data.data
+              this.fetchUserInfo(this.article.userId)
             } else {
               console.log(response.data.message)
             }
@@ -82,7 +84,18 @@ export default {
       })
     },
     fetchUserInfo(userId) {
-      //TODO
+      this.$api.user.getUserById(userId).then(
+          (response) => {
+            if (response.data.code === '0000') {
+              // set publisher user if request success.
+              this.publisher = response.data.data
+            } else {
+              console.log(response.data.message)
+            }
+          }
+      ).catch((error) => {
+        Promise.reject(error)
+      })
     },
     fetchComments(articleId, startPage, pageSize) {
       this.$api.comment.getCommentByArticlePaged(articleId, startPage, pageSize).then(
@@ -90,7 +103,6 @@ export default {
             if (response.data.code === '0000') {
               // set comments if request success.
               this.comment = response.data.data.list
-              console.log(this.comment)
             } else {
               console.log(response.data.message)
             }
