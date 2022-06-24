@@ -1,11 +1,12 @@
 <template>
+    <SideBars></SideBars>
     <div class="container">
         <main class="userprofile">
             <div class="py-5 text-center">
-                <img class="d-block mx-auto mb-4" src="../../../src/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
+                <img class="header-img" src="../../../src/assets/img/doge.png" alt="" width="150" height="150">
 <!--                <h2>Profile</h2>-->
             </div>
-            <div class="row g-5">
+            <div class="row g-5" >
                 <div class="container-sm">
                     <form class="needs-validation" novalidate>
                         <div class="row g-3">
@@ -13,7 +14,7 @@
                                 <label for="account" class="form-label">Account</label>
                                 <div class="input-group has-validation">
                                     <span class="input-group-text">#</span>
-                                <input v-model="account" type="text" class="form-control" id="account" placeholder="Account" required>
+                                <input v-model="account" type="text" class="form-control" id="account" placeholder="Account" disabled>
                                 <div class="invalid-feedback">
                                     Valid Account is required.
                                 </div>
@@ -95,12 +96,14 @@
 </template>
 
 <script>
+  import SideBars from '../SideBars/SideBars'
   export default {
     name: 'UserProfile',
+    components: {SideBars},
     data () {
       return {
         id: '',
-        account: '',
+        // account: '',
         password:'',
         name: '',
         email:'',
@@ -112,7 +115,7 @@
     methods:{
       update(){
         console.log(this.$store.getters.getUserId)
-        this.$api.user.update(this.id=this.$store.getters.getUserId,this.account, this.password,this.name,this.email,this.gender,this.birthday,this.description).then(
+        this.$api.user.update(this.id=this.$store.getters.getUserId, this.password,this.name,this.email,this.gender,this.birthday,this.description).then(
           (res) => {
             if(res.data.code === '0000') {
               alert(res.data.message)
@@ -154,5 +157,10 @@
 
     .form-signin .checkbox {
         font-weight: 400;
+    }
+    .header-img{
+        object-fit: cover;/*图片完全填充*/
+        /*object-position: center;*//*设置头像选取照片的哪个区域object-position: x y*/
+        border-radius: 50%;/*头像框圆形设置*/
     }
 </style>

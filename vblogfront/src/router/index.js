@@ -4,6 +4,8 @@ import LoginView from '../views/LoginView'
 import SignUpView from '../views/SignUpView'
 import UserProfile from '../views/User/UserProfile'
 import CommentView from '../views/Comment/CommentView'
+import SideBars from '../views/SideBars/SideBars'
+import Like from '../views/User/Like'
 
 const routes = [
   {
@@ -37,6 +39,16 @@ const routes = [
     path: '/comment',
     name: 'comment',
     component: CommentView
+  },
+  {
+    path: '/sidebar',
+    name: 'sidebar',
+    component: SideBars
+  },
+  {
+    path: '/like',
+    name: 'like',
+    component: Like
   }
 ]
 

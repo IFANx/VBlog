@@ -29,7 +29,7 @@ public class UserController {
         String password = (String) param.get("password");
         int res = userService.register(account, password);
         if(res == 0x7fffff)return ResultUtils.error("4001","账户已被注册");
-        else if(res != 0)return ResultUtils.success();
+        else if(res != 0)return ResultUtils.success("0000",account);
         else return ResultUtils.error("1100","注册失败");
     }
 
