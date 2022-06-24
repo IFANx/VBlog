@@ -43,10 +43,14 @@
                 this.$store.commit('setOnlineState', true)
                 this.$websocket.createWebSocket()
                 this.$store.commit('setUserId', res.data.data.id)
-                alert("登录成功"+this.$store.getters.getToken+this.$store.getters.getUserId)
+                alert("登录成功，为您跳转到主页面")
                 this.$router.push('/')
-              } else {
-                console.log(res.data.message)
+              } else if(res.data,code==1001) {
+                alert("账号重复登录，已为您跳转到主页面！")
+                this.$router.push('/')
+              }
+                else{
+                  alert("账号或密码错误，请重试！")
               }
             }
         ).catch((error) => {

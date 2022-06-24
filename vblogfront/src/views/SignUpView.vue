@@ -37,11 +37,11 @@ export default {
     signup(){
       this.$api.user.register(this.account, this.password).then(
               (res) => {
-                if(res.data.code === '0000') {
-                  alert(res.data.message)
+                if(res.data.code == '0000') {
+                  alert("账号注册成功，您的账号为"+res.data.data+"，为您跳转到登录界面")
                   this.$router.push('login')
-                } else {
-                  console.log(res.data.message)
+                } else if(res.data.code=='4001'){
+                  alert("账号注册失败，错误信息为"+res.data.message)
                 }
               }
       ).catch((error) => {

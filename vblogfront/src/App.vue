@@ -28,13 +28,14 @@
     </div>
   </header>
 
-  <div class="b-example-divider"></div>
 
-  <nav>
-<!--    <router-link to="/">Home</router-link>-->
-<!--    |-->
-<!--    <router-link to="/about">About</router-link>-->
-  </nav>
+<!--  <div class="b-example-divider"></div>-->
+
+<!--  <nav>-->
+<!--&lt;!&ndash;    <router-link to="/">Home</router-link>&ndash;&gt;-->
+<!--&lt;!&ndash;    |&ndash;&gt;-->
+<!--&lt;!&ndash;    <router-link to="/about">About</router-link>&ndash;&gt;-->
+<!--  </nav>-->
 
 
 
