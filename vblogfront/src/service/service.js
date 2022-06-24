@@ -34,7 +34,7 @@ instance.interceptors.response.use(
 
 const api = {
     get(url, data) {
-        return instance.get(url, qs.stringify(data))
+        return instance.get(url + '?' + qs.stringify(data))
     },
     post(url, data) {
         return instance.post(url, data)
