@@ -31,7 +31,8 @@
 
 <script>
   export default {
-    name: 'CommentView'
+    name: 'CommentView',
+
   }
 </script>
 

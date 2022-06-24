@@ -3,62 +3,35 @@
     <main>
         <div class="container" style="border-width: medium">
     <div class="row mb-2">
+        <table>
+            <thead class="toast-header">
+            Like Article
+            </thead>
+            <tbody>
+            <tr v-for="item in likeArticle" v-bind:key="item.id">
         <div class="col-md-12">
             <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                 <div class="col p-4 d-flex flex-column position-static">
-                    <strong class="d-inline-block mb-2 text-primary">World</strong>
-                    <h3 class="mb-0">Featured post</h3>
-                    <div class="mb-1 text-muted">Nov 12</div>
+<!--                    <strong class="d-inline-block mb-2 text-primary">World</strong>-->
+                    <h3 class="mb-0">{{item.title}}</h3>
+                    <div class="mb-1 text-muted">{{item.publishTime}}</div>
+                    <div class="mb-1 text-muted">{{item.content}}</div>
                     <p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
                     <a href="#" class="stretched-link">Continue reading</a>
+
                 </div>
                 <div class="col-auto d-none d-lg-block">
                     <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-
                 </div>
             </div>
         </div>
-        <div class="col-md-12">
-            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                <div class="col p-4 d-flex flex-column position-static">
-                    <strong class="d-inline-block mb-2 text-success">Design</strong>
-                    <h3 class="mb-0">Post title</h3>
-                    <div class="mb-1 text-muted">Nov 11</div>
-                    <p class="mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
-                    <a href="#" class="stretched-link">Continue reading</a>
-                </div>
-                <div class="col-auto d-none d-lg-block" >
-                    <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+            </tr>
+            </tbody>
+        </table>
 
-                </div>
-            </div>
-        </div>
-        <div class="col-md-12">
-            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                <div class="col p-4 d-flex flex-column position-static">
-                    <strong class="d-inline-block mb-2 text-success">Design</strong>
-                    <h3 class="mb-0">Post title</h3>
-                    <div class="mb-1 text-muted">Nov 11</div>
-                    <p class="mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
-                    <a href="#" class="stretched-link">Continue reading</a>
-                </div>
-                <div class="col-auto d-none d-lg-block" >
-                    <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
 
-                </div>
-            </div>
-        </div>
     </div>
-<!--            <table class="table">-->
-<!--                <thead class="table-dark">-->
-<!--                <tr>title</tr>-->
-<!--                <tr>content</tr>-->
-<!--                <tr>time</tr>-->
-<!--                </thead>-->
-<!--                <tbody>-->
-<!--                {{item}}-->
-<!--                </tbody>-->
-<!--            </table>-->
+
         </div>
     </main>
 </template>
@@ -68,18 +41,31 @@
   export default {
     name: 'Like',
     components: {SideBars},
-    // data:{
-    //   return:{
-    //     title: '',
-    //     content: '',
-    //     publish_time:''
-    //   },
-    //   item:{
-    //     title: 'title1',
-    //     content: 'content1',
-    //     publish_time:'2021-06-23 13:04:58'
-    //   }
-    // }
+    data () {
+      return {
+        likeArticle: {}
+      }
+    },
+    methods: {
+      getLikeListByUserId (id) {
+        this.$api.like.getLikeListByUserId(id).then(
+          (response) => {
+            console.log(response) // debug output
+            if (response.data.code === '0000') {
+              this.likeArticle = response.data.data
+              console.log(this.likeArticle)
+            } else {
+              console.log(response.data.message)
+            }
+          }
+        ).catch((error) => {
+          Promise.reject(error)
+        })
+      }
+    },
+    mounted() {
+      this.getLikeListByUserId(this.$route.query.id)
+    }
   }
 </script>
 

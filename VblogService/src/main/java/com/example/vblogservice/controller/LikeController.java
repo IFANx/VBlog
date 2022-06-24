@@ -28,8 +28,8 @@ public class LikeController {
         return ResultUtils.success(resultData);
     }
 
-    @GetMapping("like/what/{userId}")
-    Result getLikeListByUserId(@PathVariable int userId) {
+    @GetMapping("like/what")
+    Result getLikeListByUserId(int userId) {
         List<Article> resultData = likeService.getLikeListByUserId(userId);
 
         if (resultData.size() == 0)
