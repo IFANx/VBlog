@@ -86,6 +86,12 @@ export default {
       ).catch((error) => {
         Promise.reject(error)
       })
+    },
+    fetchUserInfo(userId) {
+      //TODO
+    },
+    fetchComments(articleId) {
+      //TODO
     }
   },
   mounted() {
