@@ -18,5 +18,5 @@ public interface UserService {
 
     int update(UserWithBLOBs userWithBLOBs);
 
-    User getSingleUser(String account);
+    User getSingleUser(int id);
 }

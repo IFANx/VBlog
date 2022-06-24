@@ -16,7 +16,7 @@ class UserServiceImplTest {
 
     @Test
     void getSingleUser() {
-        User user = userservice.getSingleUser("bob@test.com");
+        User user = userservice.getSingleUser(12);
         System.out.println(user.getAccount());
     }
 }
