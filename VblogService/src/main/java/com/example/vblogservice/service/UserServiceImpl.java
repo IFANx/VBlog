@@ -101,10 +101,8 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    public User getSingleUser(String account) {
-        UserExample userExample=new UserExample();
-        userExample.createCriteria().andAccountEqualTo(account);
-        return userMapper.selectByExample(userExample).get(0);
+    public User getSingleUser(int id) {
+        return userMapper.selectByPrimaryKey(id);
     }
 
 

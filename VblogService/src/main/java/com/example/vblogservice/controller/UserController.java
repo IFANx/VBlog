@@ -76,4 +76,11 @@ public class UserController {
         if(result==0) return ResultUtils.error("1300","删除信息失败");
         return ResultUtils.success();
     }
+
+    @GetMapping(value = "/user",produces = "application/json;charset=UTF-8")
+    public Result getUserById(int id){
+        User singleUser = userService.getSingleUser(id);
+        if(singleUser == null) return ResultUtils.error("1400","id未查询出用户");
+        return ResultUtils.success("0000",singleUser);
+    }
 }
