@@ -4,21 +4,21 @@
       <div class="col-md-12">
         <h2 class="pb-4 mb-4 fst-italic border-bottom">
           Current Article id = {{ this.$route.query.id }}
-          {{this.article.title}}
+          {{ this.article.title }}
         </h2>
 
         <article class="blog-post">
-          <p class="blog-post-meta">{{this.article.publishTime}} by <a href="#">uid={{this.article.userId}}</a></p>
+          <p class="blog-post-meta">{{ this.article.publishTime }} by <a href="#">uid={{ this.article.userId }}</a></p>
           <p class="blog-post-meta">
-            comment count = {{this.article.commentCount}}
-            like count = {{this.article.likeCount}}
-            read count = {{this.article.readCount}}
+            comment count = {{ this.article.commentCount }}
+            like count = {{ this.article.likeCount }}
+            read count = {{ this.article.readCount }}
           </p>
 
           <hr>
-          <p>{{this.article.content}}</p>
+          <p>{{ this.article.content }}</p>
           <img v-if="article.image==null" src="../../../src/assets/img/3.png">
-<!--          <img v-if="article.image!=null" src="">-->
+          <!--          <img v-if="article.image!=null" src="">-->
         </article>
 
         <div class="table table-borderless">
@@ -29,9 +29,10 @@
             </thead>
 
             <tbody>
-            <tr v-for="item in comments" v-bind:key="item.user">
-              <td>{{ item.user }}</td>
-              <td>{{ item.content }}</td>
+            <tr v-for="item in comment" v-bind:key="item.user">
+              <td>commenter id = {{ item.commenterId }}</td>
+              <td>comment time = {{ item.commentTime }}</td>
+              <td>comment content = {{ item.content }}</td>
             </tr>
             </tbody>
           </table>
@@ -54,28 +55,21 @@
 </template>
 
 <script>
+import comment from "@/service/comment";
+
 export default {
   name: 'ArticleView',
   data() {
     return {
-      comments: [
-        {
-          user: 'user1',
-          content: "shit1"
-        },
-        {
-          user: "user2",
-          content: "shit2"
-        }
-      ],
-      article: {} // load when initialized.
+      article: {}, // init when view loaded.
+      comment: {}, // init when view loaded.
+      publisher: {}, // init when view loaded.
     }
   },
   methods: {
     fetchArticle(id) {
       this.$api.article.getArticleById(id).then(
           (response) => {
-            console.log(response) // debug output
             if (response.data.code === '0000') {
               // set article if request success.
               this.article = response.data.data
@@ -90,12 +84,26 @@ export default {
     fetchUserInfo(userId) {
       //TODO
     },
-    fetchComments(articleId) {
-      //TODO
+    fetchComments(articleId, startPage, pageSize) {
+      this.$api.comment.getCommentByArticlePaged(articleId, startPage, pageSize).then(
+          (response) => {
+            if (response.data.code === '0000') {
+              // set comments if request success.
+              this.comment = response.data.data.list
+              console.log(this.comment)
+            } else {
+              console.log(response.data.message)
+            }
+          }
+      ).catch((error) => {
+        Promise.reject(error)
+      })
     }
   },
   mounted() {
-    this.fetchArticle(this.$route.query.id)
+    // execute this method when current view loaded.
+    this.fetchArticle(this.$route.query.id) // request article model from backend.
+    this.fetchComments(this.$route.query.id, 1, 5) // request 1st page of comments from backend.
   }
 }
 </script>
