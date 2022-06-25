@@ -42,7 +42,7 @@
 
           <hr>
           <p>{{ this.article.content }}</p>
-          <img v-if="article.image==null" src="../../../src/assets/img/3.png">
+          <img v-if="article.image==null" src="../../../src/assets/img/4.png">
           <!--          <img v-if="article.image!=null" src="">-->
         </article>
 
