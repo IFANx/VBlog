@@ -6,6 +6,7 @@ import UserProfile from '../views/User/UserProfile'
 import CommentView from '../views/Comment/CommentView'
 import SideBars from '../views/SideBars/SideBars'
 import Like from '../views/User/Like'
+import Subscribe from '../views/User/Subscribe'
 
 const routes = [
   {
