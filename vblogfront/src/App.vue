@@ -9,18 +9,15 @@
         </a>
 
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-          <li><a href="#" class="nav-link px-2 text-secondary">Home</a></li>
-          <li><a href="#" class="nav-link px-2 text-white">Features</a></li>
-          <li><a href="#" class="nav-link px-2 text-white">Pricing</a></li>
-          <li><a href="#" class="nav-link px-2 text-white">FAQs</a></li>
-          <li><a href="#" class="nav-link px-2 text-white">About</a></li>
+          <li><a href="#" class="nav-link px-2 text-white">Home</a></li>
         </ul>
 
         <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
-          <input type="search" class="form-control form-control-dark" placeholder="Search..." aria-label="Search">
+          <input v-model="title" type="search" class="form-control form-control-dark" placeholder="Search..." aria-label="Search">
         </form>
 
         <div class="text-end">
+          <button type="button" class="btn btn-warning" @click="doSearch(this.title)">search</button>
           <button type="button" class="btn btn-outline-light me-2" @click="LoginView">Login</button>
           <button type="button" class="btn btn-warning" @click="SignUpView">Sign-up</button>
         </div>
@@ -29,29 +26,28 @@
   </header>
 
 
-<!--  <div class="b-example-divider"></div>-->
-
-<!--  <nav>-->
-<!--&lt;!&ndash;    <router-link to="/">Home</router-link>&ndash;&gt;-->
-<!--&lt;!&ndash;    |&ndash;&gt;-->
-<!--&lt;!&ndash;    <router-link to="/about">About</router-link>&ndash;&gt;-->
-<!--  </nav>-->
-
-
-
   <router-view/>
 </template>
 <script>
   export default {
     name: 'App',
+    data() {
+      return {
+        title: ''
+      }
+    },
     methods:{
+      doSearch(title) {
+        this.$router.push('searchArticle?fuzzyTitle=' + title)
+      },
       //Button 跳转到login或者signup页面
       LoginView(){
         this.$router.push("Login")
       },
       SignUpView(){
         this.$router.push("SignUp")
-      }
+      },
+
     }
   }
 </script>
