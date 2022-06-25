@@ -5,7 +5,7 @@
         <div class="row mb-2">
             <table>
                 <thead class="toast-header">
-                Like Article
+                Like Articles
                 </thead>
                 <tbody>
                 <tr v-for="item in likeArticle" v-bind:key="item.id">
@@ -17,7 +17,7 @@
                                 <div class="mb-1 text-muted">{{item.publishTime}}</div>
                                 <div class="mb-1 text-muted">{{item.content}}</div>
                                 <p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
-                                <a href="#" class="stretched-link">Continue reading</a>
+                                <a class="stretched-link">Continue reading</a>
 
                             </div>
                             <div class="col-auto d-none d-lg-block">

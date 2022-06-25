@@ -6,8 +6,7 @@ import UserProfile from '../views/User/UserProfile'
 import CommentView from '../views/Comment/CommentView'
 import SideBars from '../views/SideBars/SideBars'
 import Like from '../views/User/Like'
-import Subscribe from '../views/User/Subscribe'
-
+import MyArticle from '../views/User/MyArticle'
 const routes = [
   {
     path: '/',
@@ -60,6 +59,16 @@ const routes = [
     path: '/searchArticle',
     name: 'searchArticle',
     component: () => import('../views/article/SearchArticleByTitleView')
+  },
+  {
+    path: '/myarticle',
+    name: 'myarticle',
+    component:MyArticle
+  },
+  {
+    path: '/myarticle',
+    name: 'myarticle',
+    component:MyArticle
   }
 ]
 
