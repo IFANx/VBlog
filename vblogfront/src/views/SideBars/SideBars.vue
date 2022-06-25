@@ -14,26 +14,22 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="nav-link text-white" >
-<!--                            <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>-->
-                            个人信息
+                        <a class="nav-link text-white" @click="profile">
+                                个人信息
                         </a>
                     </li>
                     <li>
                         <a href="#" class="nav-link text-white">
-<!--                            <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"/></svg>-->
                             我的文章
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="nav-link text-white">
-<!--                            <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"/></svg>-->
+                        <a class="nav-link text-white" @click="like">
                             我的点赞
                         </a>
                     </li>
                     <li>
                         <a href="#" class="nav-link text-white">
-<!--                            <svg class="bi me-2" width="16" height="16"></svg>-->
                             我的收藏
                         </a>
                     </li>
@@ -58,8 +54,63 @@
 
 <script>
   export default {
-    name: 'SideBars'
-  }
+    name: 'SideBars',
+    data () {
+      return {
+        likeArticle: {}
+      }
+    },
+    methods: {
+      profile() {
+        console.log(this.$store.getters.getUserId)
+          this.$api.user.getUserById(this.$store.getters.getUserId).then(
+            (response) => {
+              console.log(response) // debug output
+              if (response.data.code === '0000') {
+                let data = response.data.data
+                // set article if request success.
+                this.user = response.data.data
+                this.account = data.account
+                this.name = data.name
+                this.password = data.password
+                this.email = data.email
+                this.gender = data.gender
+                this.birthday = data.birthday.substr(0, 10)
+                this.description = data.description
+                this.portrait = data.portrait
+                this.$router.push('/userprofile?id='+this.$store.getters.getUserId)
+              } else {
+                console.log(response.data.message)
+              }
+            }
+          ).catch((error) => {
+            Promise.reject(error)
+          })
+        },
+         like() {
+        console.log(this.$store.getters.getUserId)
+        this.$api.like.getLikeListByUserId(this.$store.getters.getUserId).then(
+          (response) => {
+            console.log(response) // debug output
+            if (response.data.code === '0000') {
+              this.likeArticle = response.data.data
+              this.$router.push('/like?id='+this.$store.getters.getUserId)
+              console.log(this.likeArticle)
+            } else {
+              console.log(response.data.message)
+            }
+          }
+        ).catch((error) => {
+          Promise.reject(error)
+        })
+      }
+    },
+    // mounted() {
+    //   this.getLikeListByUserId(this.$route.query.id)
+    // }
+      }
+
+
 </script>
 
 <style scoped>
