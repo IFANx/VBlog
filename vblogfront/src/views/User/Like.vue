@@ -62,10 +62,10 @@
           Promise.reject(error)
         })
       }
+    },
+    mounted() {
+      this.getLikeListByUserId(this.$route.query.id)
     }
-    // mounted() {
-    //   this.getLikeListByUserId(this.$route.query.id)
-    // }
   }
 </script>
 
