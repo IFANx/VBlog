@@ -17,7 +17,7 @@
                                     <div class="mb-1 text-muted">{{item.publishTime}}</div>
                                     <div class="mb-1 text-muted">{{item.content}}</div>
                                     <p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
-                                    <a href="#" class="stretched-link">Continue reading</a>
+                                    <a class="stretched-link" @click="jumpToArticlePage(item.id)">Continue reading</a>
 
                                 </div>
                                 <div class="col-auto d-none d-lg-block">
@@ -46,6 +46,7 @@
                         </template>
                         <li class="page-item" @click="toTargetPage(this.pagination.currentPage+1)"><a class="page-link">Next
                             Page</a></li>
+                        <button type="button" class="btn btn-primary" @click="add">发布</button>
                     </ul>
                 </nav>
 
@@ -72,6 +73,9 @@
       }
     },
     methods: {
+      jumpToArticlePage(articleId) {
+        this.$router.push('/article?id=' + articleId)
+      },
       toTargetPage(pageIndex) {
         // low/upper bound check and fix.
         if (pageIndex > this.pagination.totalPages) pageIndex = this.pagination.totalPages
@@ -101,6 +105,9 @@
         ).catch((error) => {
           Promise.reject(error)
         })
+      },
+      add(){
+        this.$router.push('/addarticle')
       }
     },
     mounted() {
