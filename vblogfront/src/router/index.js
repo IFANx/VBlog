@@ -7,6 +7,8 @@ import CommentView from '../views/Comment/CommentView'
 import SideBars from '../views/SideBars/SideBars'
 import Like from '../views/User/Like'
 import MyArticle from '../views/User/MyArticle'
+import addArticle from '../views/User/addArticle'
+
 const routes = [
   {
     path: '/',
@@ -66,9 +68,9 @@ const routes = [
     component:MyArticle
   },
   {
-    path: '/myarticle',
-    name: 'myarticle',
-    component:MyArticle
+    path: '/addarticle',
+    name: 'addarticle',
+    component:addArticle
   }
 ]
 
