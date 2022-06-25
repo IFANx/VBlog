@@ -43,6 +43,7 @@ public class ArticleController {
     @GetMapping("articles")
     public Result getAllArticles() {
         ArticleExample example = new ArticleExample();// non criteria, get all articles.
+        example.setOrderByClause("publish_time desc");
         List<ArticleWithBLOBs> resultData = articleService.getArticleByExample(example);
 
         if (resultData.size() == 0)
@@ -53,6 +54,7 @@ public class ArticleController {
     @GetMapping("articles/paged")
     public Result getArticlesPaged(int startPage, int pageSize) {
         ArticleExample example = new ArticleExample();// non criteria, get all articles.
+        example.setOrderByClause("publish_time desc");
         PageInfo<Article> resultData = articleService.getArticlesByExamplePaged(example, startPage, pageSize);
 
         if (resultData.getTotal() == 0)
@@ -93,6 +95,7 @@ public class ArticleController {
         ArticleExample.Criteria criteria = example.createCriteria();
         criteria.andTitleEqualTo(title);
         criteria.andTitleIsNotNull();
+        example.setOrderByClause("publish_time desc");
 
         List<ArticleWithBLOBs> resultData = articleService.getArticleByExample(example);
 
@@ -108,6 +111,7 @@ public class ArticleController {
         ArticleExample.Criteria criteria = example.createCriteria();
         criteria.andTitleEqualTo(title);
         criteria.andTitleIsNotNull();
+        example.setOrderByClause("publish_time desc");
 
         PageInfo<Article> resultData = articleService.getArticlesByExamplePaged(example, startPage, pageSize);
 
@@ -123,6 +127,7 @@ public class ArticleController {
         ArticleExample.Criteria criteria = example.createCriteria();
         criteria.andTitleLike("%" + title + "%");
         criteria.andTitleIsNotNull();
+        example.setOrderByClause("publish_time desc");
 
         List<ArticleWithBLOBs> resultData = articleService.getArticleByExample(example);
 
@@ -138,6 +143,7 @@ public class ArticleController {
         ArticleExample.Criteria criteria = example.createCriteria();
         criteria.andTitleLike("%" + title + "%");
         criteria.andTitleIsNotNull();
+        example.setOrderByClause("publish_time desc");
 
         PageInfo<Article> resultData = articleService.getArticlesByExamplePaged(example, startPage, pageSize);
 
@@ -166,6 +172,7 @@ public class ArticleController {
         ArticleExample.Criteria criteria = example.createCriteria();
         criteria.andTagEqualTo(tag);
         criteria.andTagIsNotNull();
+        example.setOrderByClause("publish_time desc");
 
         List<ArticleWithBLOBs> resultData = articleService.getArticleByExample(example);
 
@@ -181,6 +188,7 @@ public class ArticleController {
         ArticleExample.Criteria criteria = example.createCriteria();
         criteria.andTagEqualTo(tag);
         criteria.andTagIsNotNull();
+        example.setOrderByClause("publish_time desc");
 
         PageInfo<Article> resultData = articleService.getArticlesByExamplePaged(example, startPage, pageSize);
 
@@ -208,6 +216,7 @@ public class ArticleController {
         ArticleExample.Criteria criteria = example.createCriteria();
         criteria.andUserIdEqualTo(userId);
         criteria.andUserIdIsNotNull();
+        example.setOrderByClause("publish_time desc");
 
         List<ArticleWithBLOBs> resultData = articleService.getArticleByExample(example);
 
@@ -223,6 +232,7 @@ public class ArticleController {
         ArticleExample.Criteria criteria = example.createCriteria();
         criteria.andUserIdEqualTo(userId);
         criteria.andUserIdIsNotNull();
+        example.setOrderByClause("publish_time desc");
 
         PageInfo<Article> resultData = articleService.getArticlesByExamplePaged(example, startPage, pageSize);
 
@@ -292,6 +302,7 @@ public class ArticleController {
         ArticleExample.Criteria criteria = example.createCriteria();
         criteria.andPublishTimeBetween(startTime, endTime);
         criteria.andPublishTimeIsNotNull();
+        example.setOrderByClause("publish_time desc");
 
         List<ArticleWithBLOBs> resultData = articleService.getArticleByExample(example);
 
@@ -307,6 +318,7 @@ public class ArticleController {
         ArticleExample.Criteria criteria = example.createCriteria();
         criteria.andPublishTimeBetween(startTime, endTime);
         criteria.andPublishTimeIsNotNull();
+        example.setOrderByClause("publish_time desc");
 
         PageInfo<Article> resultData = articleService.getArticlesByExamplePaged(example, startPage, pageSize);
 

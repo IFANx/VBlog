@@ -19,7 +19,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="nav-link text-white">
+                        <a  class="nav-link text-white" @click="toArticle">
                             我的文章
                         </a>
                     </li>
@@ -28,26 +28,8 @@
                             我的点赞
                         </a>
                     </li>
-                    <li>
-                        <a href="#" class="nav-link text-white">
-                            我的收藏
-                        </a>
-                    </li>
                 </ul>
                 <hr>
-<!--                <div class="dropdown">-->
-<!--                    <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">-->
-<!--                        <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">-->
-<!--                        <strong>mdo</strong>-->
-<!--                    </a>-->
-<!--                    <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">-->
-<!--                        <li><a class="dropdown-item" href="#">New project...</a></li>-->
-<!--                        <li><a class="dropdown-item" href="#">Settings</a></li>-->
-<!--                        <li><a class="dropdown-item" href="#">Profile</a></li>-->
-<!--                        <li><hr class="dropdown-divider"></li>-->
-<!--                        <li><a class="dropdown-item" href="#">Sign out</a></li>-->
-<!--                    </ul>-->
-<!--                </div>-->
             </div>
         </main>
 </template>
@@ -57,7 +39,14 @@
     name: 'SideBars',
     data () {
       return {
-        likeArticle: {}
+        likeArticle: {},
+        currentPageArticles: {},
+        pagination: {
+          currentPage: 1,
+          pageSize: 4,
+          total: 0,
+          totalPages: 0
+        }
       }
     },
     methods: {
@@ -103,11 +92,41 @@
         ).catch((error) => {
           Promise.reject(error)
         })
+      },
+      toTargetPage(pageIndex) {
+        // low/upper bound check and fix.
+        if (pageIndex > this.pagination.totalPages) pageIndex = this.pagination.totalPages
+        if (pageIndex < 1) pageIndex = 1
+        // to request paginated data.
+        this.$api.article.getArticlesByUserIdPaged(this.$store.getters.getUserId, pageIndex, this.pagination.pageSize).then(
+          (response) => {
+            if (response.data.code === '0000') {
+              this.currentPageArticles = response.data.data.list
+              this.pagination.currentPage = pageIndex
+            }
+          }
+        )
+      },
+      toArticle(){
+        console.log(this.$store.getters.getUserId)
+        this.$api.article.getArticlesByUserIdPaged(this.$store.getters.getUserId, 1,4).then(
+          (response) => {
+            console.log(response) // debug output
+            if (response.data.code === '0000') {
+              this.currentPageArticles = response.data.data.list
+              this.pagination.total = response.data.data.total
+              this.pagination.totalPages = response.data.data.pages
+              this.$router.push('/myarticle?id='+this.$store.getters.getUserId)
+            } else {
+              console.log(response.data.message)
+            }
+          }
+        ).catch((error) => {
+          Promise.reject(error)
+        })
       }
     },
-    // mounted() {
-    //   this.getLikeListByUserId(this.$route.query.id)
-    // }
+
       }
 
 
