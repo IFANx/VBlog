@@ -57,9 +57,9 @@ const routes = [
     component: Like
   },
   {
-    path: '/subscribe',
-    name: 'subscribe',
-    component:Subscribe
+    path: '/searchArticle',
+    name: 'searchArticle',
+    component: () => import('../views/article/SearchArticleByTitleView')
   }
 ]
 
